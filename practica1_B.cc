@@ -104,7 +104,14 @@ void draw_axis()
 
 void draw_objects()
 {
-    cubo.draw_solido_colores();
+    // Pintar el cubo completamente de morado pastel
+    cubo.draw_solido(0.5, 0.5, 1);
+    // Pintar las aristas del cubo de color negro
+    cubo.draw_lineas(0, 0, 0, 4);
+    //Pintar los puntos del cubo de color rosa
+    cubo.draw_puntos(1, 0, 1, 7);
+
+    //cubo.draw_solido_colores();
     //piramide.draw_puntos(1.0, 0.5, 0.0, 5);
 }
 

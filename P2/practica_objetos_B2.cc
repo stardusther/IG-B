@@ -31,7 +31,7 @@ typedef enum
 } _tipo_objeto;
 
 _tipo_objeto t_objeto = CUBO;
-_modo modo = EDGES;
+_modo modo = SOLID_COLORS;
 
 // variables que definen la posicion de la camara en coordenadas polares
 GLfloat Observer_distance;
@@ -52,8 +52,8 @@ _rotacion rotacion;
 _extrusion *extrusion;
 
 // Objetos por revolución
-_cilindro cilindro(20, 0.5, 1.0);
-_cono cono(20, 20, 0.5, 1.0);
+_cilindro cilindro(20, 1, 1);
+_cono cono(20, 1, 1, 1);
 _esfera esfera(20, 10, 1.0);
 
 // _objeto_ply *ply;
@@ -292,6 +292,10 @@ void initialize(void)
 	// Inicializar el vector de colores de las caras de los triángulos
     cubo.inicializar_colores();
     piramide.inicializar_colores();
+	rotacion.inicializar_colores();
+	esfera.inicializar_colores();
+	cono.inicializar_colores();
+	cilindro.inicializar_colores();
 
 	// se inicalizan la ventana y los planos de corte
 	Size_x = 0.5;
@@ -310,6 +314,7 @@ void initialize(void)
 
 	// se habilita el z-bufer
 	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
 	change_projection();
 	glViewport(0, 0, Window_width, Window_high);
 }

@@ -83,7 +83,7 @@ void _triangulos3D::inicializar_colores()
 	colores.resize(caras.size());
 	for (int i = 0; i < caras.size(); i++)
 	{
-		colores[i].x = (rand() % 100) / 100.0;
+		colores[i].x= (rand() % 100) / 100.0;
 		colores[i].y = (rand() % 100) / 100.0;
 		colores[i].z = (rand() % 100) / 100.0;
 	}
@@ -100,8 +100,9 @@ void _triangulos3D::draw_solido_colores()
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < caras.size(); i++)
 	{
+		// Recuperar el color de la cara
 		glColor3fv((GLfloat *)&colores[i]);
-		glVertex3fv((GLfloat *)&vertices[caras[i]._0]);
+		glVertex3fv((GLfloat *)&vertices[caras[i]._0]); // Asignar colores a los vértices de la cara
 		glVertex3fv((GLfloat *)&vertices[caras[i]._1]);
 		glVertex3fv((GLfloat *)&vertices[caras[i]._2]);
 	}
@@ -291,6 +292,15 @@ void _objeto_ply::parametros(char *archivo)
 		caras[i]._2 = car_ply[i*3+2];
 	}
 
+	// Asignar colores random a las caras del objeto
+	colores.resize(n_car);
+	for(int i=0; i<n_car; i++)
+	{
+		colores[i].r = (rand() % 100) / 100.0;
+		colores[i].g = (rand() % 100) / 100.0;
+		colores[i].b = (rand() % 100) / 100.0;
+	}
+
 }
 
 //************************************************************************
@@ -466,6 +476,16 @@ _cilindro::_cilindro(int num, float radio, float altura){
 	perfil.push_back(aux);
 
 	parametros(perfil, num);
+
+	// Asignar colores random a las caras del cilindro
+	/*for (int i = 0; i < caras.size(); i++){
+		_color4f color;
+		color.r = (rand() % 100) / 100.0;
+		color.g = (rand() % 100) / 100.0;
+		color.b = (rand() % 100) / 100.0;
+		color.a = 1.0;
+		colores.push_back(color);
+	}*/
 }
 
 // esfera
@@ -482,6 +502,15 @@ _esfera::_esfera(int num1, int num2, float radio){
 
 	parametros(perfil, num1);
 
+	// Asignar colores random a las caras de la ESFERA
+	/*for (int i = 0; i < caras.size(); i++){
+		_color4f color;
+		color.r = (rand() % 100) / 100.0;
+		color.g = (rand() % 100) / 100.0;
+		color.b = (rand() % 100) / 100.0;
+		color.a = 1.0;
+		colores.push_back(color);
+	}*/
 }
 
 

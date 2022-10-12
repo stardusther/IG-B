@@ -96,6 +96,7 @@ class _rotacion : public _triangulos3D
 {
 public:
 	_rotacion();
+	_rotacion(const char *archivo, int num); // Leer desde un PLY
 
 	void parametros(vector<_vertex3f> perfil, int num);
 };

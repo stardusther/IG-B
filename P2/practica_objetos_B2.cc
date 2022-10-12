@@ -26,7 +26,8 @@ typedef enum
 	ESFERA,
 	OBJETO_PLY,
 	ROTACION,
-	EXTRUSION
+	EXTRUSION,
+	PEON
 } _tipo_objeto;
 
 _tipo_objeto t_objeto = CUBO;
@@ -291,7 +292,6 @@ void initialize(void)
 	// Inicializar el vector de colores de las caras de los triángulos
     cubo.inicializar_colores();
     piramide.inicializar_colores();
-	rotacion.inicializar_colores();
 
 	// se inicalizan la ventana y los planos de corte
 	Size_x = 0.5;
@@ -361,7 +361,34 @@ int main(int argc, char *argv[])
 	poligono.push_back(aux);
 
 	extrusion = new _extrusion(poligono, 0.25, 1.0, 0.25);*/
+	// Crear PEÓN
+	vector<_vertex3f> perfil_peon;
+	_vertex3f aux;
 
+	aux.x = 1.0;	aux.y = -1.4;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 1.0;	aux.y = -1.1;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.5;	aux.y = -0.7;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.4;	aux.y = -0.4;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.4;	aux.y = 0.5;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.5;	aux.y = 0.6;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.3;	aux.y = 0.6;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.5;	aux.y = 0.8;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.55;	aux.y = 1.0;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.5;	aux.y = 1.2;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+	aux.x = 0.3;	aux.y = 1.4;	aux.z = 0.0;
+	perfil_peon.push_back(aux);
+
+	rotacion.parametros(perfil_peon, 24);
 
 	// se llama a la inicialización de glut
 	glutInit(&argc, argv);
@@ -401,7 +428,6 @@ int main(int argc, char *argv[])
 
 	// creación del objeto ply
 	ply.parametros(argv[1]);
-
 	// ply = new _objeto_ply(argv[1]);
 
 	// inicio del bucle de eventos

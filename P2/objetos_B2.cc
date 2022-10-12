@@ -294,12 +294,41 @@ void _objeto_ply::parametros(char *archivo)
 }
 
 //************************************************************************
-// objeto por revolucion
+// objetos por revolucion
 //************************************************************************
 
 _rotacion::_rotacion()
 {
 }
+
+// Crear un ply por revolución
+_rotacion::_rotacion(const char *archivo, int num){
+	int n_ver, n_car;
+
+	vector<float> ver_ply;
+	vector<int> car_ply;
+
+	// Leer el archivo ply
+	_file_ply::read(archivo, ver_ply, car_ply);
+
+	n_ver = ver_ply.size()/3;
+	n_car = car_ply.size()/3;
+
+	// Guardar las caras del perfil
+	vector<_vertex3f> perfil;
+	_vertex3f aux;
+
+	for(int i=0; i<n_ver; i++){
+		aux.x = ver_ply[i*3];
+		aux.y = ver_ply[i*3+1];
+		aux.z = ver_ply[i*3+2];
+		perfil.push_back(aux);
+	}
+
+	// Crear el objeto por revolución
+	parametros(perfil, num);
+}
+
 
 void _rotacion::parametros(vector<_vertex3f> perfil, int num)
 {

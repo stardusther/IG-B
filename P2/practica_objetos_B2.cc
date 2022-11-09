@@ -393,7 +393,7 @@ int main(int argc, char *argv[])
 	aux.x = 0.3;	aux.y = 1.4;	aux.z = 0.0;
 	perfil_peon.push_back(aux);
 
-	rotacion.parametros(perfil_peon, 24);
+	rotacion.parametros(perfil_peon, 24, 0, );
 
 	// se llama a la inicialización de glut
 	glutInit(&argc, argv);

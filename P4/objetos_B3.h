@@ -51,7 +51,7 @@ public:
 
 	_triangulos3D();
 void 	draw_aristas(float r, float g, float b, int grosor);
-void    draw_solido(float r, float g, float b);
+void   draw_solido(float r, float g, float b);
 void 	draw_solido_colores();
 void   draw_solido_plano();
 void   draw_solido_suave();

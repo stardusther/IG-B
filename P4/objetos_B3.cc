@@ -1,5 +1,5 @@
 //**************************************************************************
-// Práctica 3
+// Práctica 4
 //**************************************************************************
 
 #include "objetos_B3.h"
@@ -310,50 +310,24 @@ _cubo::_cubo(float tam, bool tapa_inf, bool tapa_sup)
 
   // triangulos
   caras.resize(12);
+  
+  caras[0]._0 = 0; caras[0]._1 = 1; caras[0]._2 = 3;
+  caras[1]._0 = 3; caras[1]._1 = 1; caras[1]._2 = 2;
+  caras[2]._0 = 1; caras[2]._1 = 5; caras[2]._2 = 2;
+  caras[3]._0 = 5; caras[3]._1 = 6; caras[3]._2 = 2; 
+  caras[4]._0 = 5; caras[4]._1 = 4; caras[4]._2 = 6;
+  caras[5]._0 = 4; caras[5]._1 = 7; caras[5]._2 = 6;
+  caras[6]._0 = 0; caras[6]._1 = 7; caras[6]._2 = 4; 
+  caras[7]._0 = 0; caras[7]._1 = 3; caras[7]._2 = 7;
 
-  caras[0]._0 = 0;
-  caras[0]._1 = 1;
-  caras[0]._2 = 3;
-  caras[1]._0 = 3;
-  caras[1]._1 = 1;
-  caras[1]._2 = 2;
-  caras[2]._0 = 1;
-  caras[2]._1 = 5;
-  caras[2]._2 = 2;
-  caras[3]._0 = 5;
-  caras[3]._1 = 6;
-  caras[3]._2 = 2;
-  caras[4]._0 = 5;
-  caras[4]._1 = 4;
-  caras[4]._2 = 6;
-  caras[5]._0 = 4;
-  caras[5]._1 = 7;
-  caras[5]._2 = 6;
-  caras[6]._0 = 0;
-  caras[6]._1 = 7;
-  caras[6]._2 = 4;
-  caras[7]._0 = 0;
-  caras[7]._1 = 3;
-  caras[7]._2 = 7;
-
-  if (tapa_sup)
-  {
-    caras[8]._0 = 3;
-    caras[8]._1 = 2;
-    caras[8]._2 = 7;
-    caras[9]._0 = 2;
-    caras[9]._1 = 6;
-    caras[9]._2 = 7;
+  if(tapa_sup){
+    caras[8]._0 = 3; caras[8]._1 = 2; caras[8]._2 = 7;
+    caras[9]._0 = 2; caras[9]._1 = 6; caras[9]._2 = 7;
   }
 
-  if (tapa_inf)
-  {
-    caras[10]._0 = 0;
-    caras[10]._1 = 1;
-    caras[10]._2 = 4;
-    caras[11]._0 = 1;
-    caras[11]._1 = 5;
-    caras[11]._2 = 4;
+  if(tapa_inf){
+    caras[10]._0 = 0; caras[10]._1 = 1; caras[10]._2 = 4;
+    caras[11]._0 = 1; caras[11]._1 = 5; caras[11]._2 = 4;
   }
 
   // colores de las caras

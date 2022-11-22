@@ -158,7 +158,6 @@ void draw_objects()
         glTranslatef(-1, 0, 0);
         nintendo.draw(modo, 1.0, 0.0, 0.0, 5);
         glPopMatrix();
-        ;
         break;
 
     case EXTRUSION:
@@ -417,73 +416,41 @@ int main(int argc, char *argv[])
     // Peón por rotación
     vector<_vertex3f> perfil_peon;
 
-    aux.x = 1.0;
-    aux.y = -1.4;
-    aux.z = 0.0;
+    aux.x = 1.0;	aux.y = -1.4;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 1.0;
-    aux.y = -1.1;
-    aux.z = 0.0;
+    aux.x = 1.0;	aux.y = -1.1;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.5;
-    aux.y = -0.7;
-    aux.z = 0.0;
+    aux.x = 0.5;	aux.y = -0.7;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.4;
-    aux.y = -0.4;
-    aux.z = 0.0;
+    aux.x = 0.4;	aux.y = -0.4;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.4;
-    aux.y = 0.5;
-    aux.z = 0.0;
+    aux.x = 0.4;	aux.y = 0.5;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.5;
-    aux.y = 0.6;
-    aux.z = 0.0;
+    aux.x = 0.5;	aux.y = 0.6;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.3;
-    aux.y = 0.6;
-    aux.z = 0.0;
+    aux.x = 0.3;	aux.y = 0.6;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.5;
-    aux.y = 0.8;
-    aux.z = 0.0;
+    aux.x = 0.5;	aux.y = 0.8;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.55;
-    aux.y = 1.0;
-    aux.z = 0.0;
+    aux.x = 0.55;	aux.y = 1.0;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.5;
-    aux.y = 1.2;
-    aux.z = 0.0;
+    aux.x = 0.5;	aux.y = 1.2;	aux.z = 0.0;
     perfil_peon.push_back(aux);
-    aux.x = 0.3;
-    aux.y = 1.4;
-    aux.z = 0.0;
+    aux.x = 0.3;	aux.y = 1.4;	aux.z = 0.0;
     perfil_peon.push_back(aux);
 
     rotacion.parametros(perfil_peon, 24, 0, true, false);
 
     // Polígono por extrusión
-    aux.x = 1.0;
-    aux.y = 0.0;
-    aux.z = 1.0;
+    aux.x=1.0; aux.y=0.0; aux.z=1.0;
     poligono.push_back(aux);
-    aux.x = 1.0;
-    aux.y = 0.0;
-    aux.z = -1.0;
+    aux.x=1.0; aux.y=0.0; aux.z=-1.0;
     poligono.push_back(aux);
-    aux.x = -1.2;
-    aux.y = 0.0;
-    aux.z = -1.0;
+    aux.x=-1.2; aux.y=0.0; aux.z=-1.0;
     poligono.push_back(aux);
-    aux.x = -0.8;
-    aux.y = 0.0;
-    aux.z = 0.0;
+    aux.x=-0.8; aux.y=0.0; aux.z=0.0;
     poligono.push_back(aux);
-    aux.x = -1.2;
-    aux.y = 0.0;
-    aux.z = 1.0;
+    aux.x=-1.2; aux.y=0.0; aux.z=1.0;
     poligono.push_back(aux);
 
     extrusion = new _extrusion(poligono, 0.25, 1.0, 0.25);

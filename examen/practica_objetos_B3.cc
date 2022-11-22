@@ -28,9 +28,11 @@ typedef enum
     ESFERA,
     EXTRUSION,
     NINTENDO,
-    EJ1
+    EJ1,
+    EJ2,
+    EJ3
 } _tipo_objeto;
-_tipo_objeto t_objeto = NINTENDO; // por defecto
+_tipo_objeto t_objeto = EJ3; // por defecto
 _modo modo = SOLID;               // por defecto
 
 // variables que definen la posicion de la camara en coordenadas polares
@@ -55,6 +57,10 @@ _esfera esfera(1, 6, 6, false, true);
 //_excavadora excavadora;
 _nintendo nintendo; // P3
 _extrusion *extrusion;
+
+//EXAMEN
+_octaedro octaedro;
+_construccion construccion;
 
 bool animacion = false;
 // _objeto_ply *ply;
@@ -165,6 +171,12 @@ void draw_objects()
     case EXTRUSION:
         extrusion->draw(modo, 1.0, 0.0, 0.0, 5);
         break;
+    case EJ1:
+        octaedro.draw(modo, 1.0, 0.0, 0.0, 5);
+        break;
+    case EJ3:
+        construccion.draw(modo, 1.0, 0.0, 0.0, 5);
+        break;
     }
 }
 
@@ -227,7 +239,7 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case '4':
         modo = SOLID_COLORS;
         break;
-    case 'P':
+    /*case 'P':
         t_objeto = PIRAMIDE;
         break;
     case 'C':
@@ -236,10 +248,11 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case 'O':
         t_objeto = OBJETO_PLY;
         break;
+    */
     case 'R':
         t_objeto = ROTACION;
         break;
-    case 'L':
+    /*case 'L':
         t_objeto = CILINDRO;
         break;
     case 'N':
@@ -248,16 +261,22 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case 'E':
         t_objeto = ESFERA;
         break;
-    case 'S':
-        t_objeto = NINTENDO;
-        break;
     case 'X':
-        t_objeto = EXTRUSION;
+        t_objeto = EXTRUSION;break;*/
+    case 'S':
+        t_objeto = EJ1;
+        break;
+    case 'A':
+        t_objeto = EJ3;
+        break;
+    case 'D':
+        t_objeto = EJ2;
+        break;
     }
     glutPostRedisplay();
 }
 
-void animar(int velocidad = 1)
+/* void animar(int velocidad = 1)
 {
     
     bool sumar = true;
@@ -273,7 +292,7 @@ void animar(int velocidad = 1)
     if (nintendo.mando_izq.giro_joystick != -25 && restar)
         nintendo.mando_izq.giro_joystick -= 5;
     
-}
+} */
 
 //***************************************************************************
 // Funcion llamada cuando se aprieta una tecla especial
@@ -310,52 +329,16 @@ void special_key(int Tecla1, int x, int y)
         break;
 
     case GLUT_KEY_F1: // Girar joystick
-        if (nintendo.mando_izq.giro_joystick < nintendo.mando_izq.max_giro_joystick)
-            nintendo.mando_izq.giro_joystick += 5;
+        construccion.rotacion_cono += 5;
         break;
 
     case GLUT_KEY_F2: // girar joystick abajo
-        if (nintendo.mando_izq.giro_joystick > (-nintendo.mando_izq.max_giro_joystick))
-            nintendo.mando_izq.giro_joystick -= 5;
+        if (construccion.brazo.pirindolo.altura_cilindro < 0.2)
+            construccion.brazo.pirindolo.altura_cilindro += 0.05;
         break;
-        // TODO: Añadir las teclas para mover el joystick a la dcha e izq
-
     case GLUT_KEY_F3: // pulsar botón
-        // nintendo.mando_izq.pulsar_boton();
-        break;
-
-    case GLUT_KEY_F4: // Sacar mando
-        if (nintendo.sacar_mando < 2)
-            nintendo.sacar_mando += 0.1;
-        break;
-
-    case GLUT_KEY_F5: // Meter mando
-        if (nintendo.sacar_mando > 0)
-            nintendo.sacar_mando -= 0.1;
-        break;
-
-    case GLUT_KEY_F6:
-        animacion = !animacion;
-        break;
-
-    case GLUT_KEY_F7:
-        if (nintendo.pantalla.rotacion_pie < nintendo.pantalla.rotacion_pie_max)
-            nintendo.pantalla.rotacion_pie += 5;
-        else
-            nintendo.pantalla.rotacion_pie = nintendo.pantalla.rotacion_pie_max;
-        break;
-
-    case GLUT_KEY_F8:
-        if (nintendo.pantalla.rotacion_pie > 0)
-            nintendo.pantalla.rotacion_pie -= 5;
-        else
-            nintendo.pantalla.rotacion_pie = 0;
-
-    case GLUT_KEY_F9:
-        /* if (nintendo.pantalla.rotacion_pantalla < nintendo.pantalla.rotacion_pantalla_max)
-            nintendo.pantalla.rotacion_pantalla += 5;
-        else
-            nintendo.pantalla.rotacion_pantalla = nintendo.pantalla.rotacion_pantalla_max; */
+         if (construccion.brazo.pirindolo.altura_cilindro > 0.15)
+            construccion.brazo.pirindolo.altura_cilindro -= 0.05;
         break;
 
     /* case GLUT_KEY_F6:excavadora.giro_segundo_brazo-=1;
@@ -402,7 +385,7 @@ void movimiento()
 {
     if (animacion)
     {
-        animar(1);
+        //animar(1);
         glutPostRedisplay();
     }
 }
@@ -422,21 +405,22 @@ int main(int argc, char *argv[])
     vector<_vertex3f> perfil, poligono;
     _vertex3f aux;
 
-    /* aux.x=1.0; aux.y=-1.0; aux.z=0.0;
-    perfil.push_back(aux);
-    aux.x=1.5; aux.y=0.0; aux.z=0.0;
+//jarron
+    
+    aux.x=1.5; aux.y=1.2; aux.z=0.0;
     perfil.push_back(aux);
     aux.x=1.0; aux.y=1.0; aux.z=0.0;
     perfil.push_back(aux);
-    aux.x=1.5; aux.y=1.2; aux.z=0.0;
+    aux.x=1.5; aux.y=0.0; aux.z=0.0;
     perfil.push_back(aux);
-
+    aux.x=1.0; aux.y=-1.0; aux.z=0.0;
+    perfil.push_back(aux); 
 
     rotacion.parametros(perfil,6,0,1,1);
-     */
+    
 
     // Peón por rotación
-    vector<_vertex3f> perfil_peon;
+/*     vector<_vertex3f> perfil_peon;
 
     aux.x = 1.0;
     aux.y = -1.4;
@@ -483,10 +467,10 @@ int main(int argc, char *argv[])
     aux.z = 0.0;
     perfil_peon.push_back(aux);
 
-    rotacion.parametros(perfil_peon, 24, 0, true, false);
+    rotacion.parametros(perfil_peon, 24, 0, true, false); */
 
     // Polígono por extrusión
-    aux.x = 1.0;
+/*     aux.x = 1.0;
     aux.y = 0.0;
     aux.z = 1.0;
     poligono.push_back(aux);
@@ -507,7 +491,7 @@ int main(int argc, char *argv[])
     aux.z = 1.0;
     poligono.push_back(aux);
 
-    extrusion = new _extrusion(poligono, 0.25, 1.0, 0.25);
+    extrusion = new _extrusion(poligono, 0.25, 1.0, 0.25); */
 
     // se llama a la inicialización de glut
     glutInit(&argc, argv);

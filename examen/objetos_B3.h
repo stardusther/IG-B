@@ -60,6 +60,11 @@ vector<_vertex3f> colores_caras;
 // objetos o modelos
 //*************************************************************************
 
+class _octaedro: public _triangulos3D
+{
+public:
+       _octaedro(float tam=0.5);
+};
 //*************************************************************************
 // clase cubo
 //*************************************************************************
@@ -129,7 +134,7 @@ public:
 class _cono: public _rotacion
 {
 public:
-       _cono(float radio, float altura, int num, bool tapa_inf=true, bool tapa_sup=true);
+       _cono(float radio=1, float altura=2, int num=6, bool tapa_inf=true, bool tapa_sup=true);
 };
 
 //************************************************************************
@@ -254,4 +259,50 @@ public:
 
 void draw(_modo modo, float r, float g, float b, float grosor);
        
+};
+
+class _pirindolo: public _triangulos3D
+{
+       public:
+       float altura_cilindro = 0.2;
+       float trans_altura = 0;
+       _pirindolo();
+       _esfera esfera;
+       _cilindro cilindro;
+
+       void draw(_modo modo, float r, float g, float b, float grosor);
+};
+
+class _brazo: public _triangulos3D {
+public:
+       float altura_base = 0.2;
+       float largo_base = 1.5;
+       float profundidad_base = 0.4;
+
+       _brazo();
+       _pirindolo pirindolo;
+       
+       void draw(_modo modo, float r, float g, float b, float grosor);
+protected:
+       _cubo base;
+
+};
+
+class _construccion:public _triangulos3D{
+public:
+       float altura_cono = 2;
+       float rotacion_cono = 0;
+       _construccion();
+       _cono cono;
+       _brazo brazo;
+       //_pirindolo pirindolo;
+
+       void draw(_modo modo, float r, float g, float b, float grosor);
+};
+
+class _figura_ : public _triangulos3D
+{
+       public:
+       _figura_();
+       _construccion construccion;
 };

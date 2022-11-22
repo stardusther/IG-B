@@ -439,7 +439,7 @@ void _objeto_ply::parametros(char *archivo)
   srand(10);
 
   // colores
-  float sum;
+/*   float sum;
   int n;
   colores_caras.resize(caras.size());
 
@@ -468,7 +468,7 @@ void _objeto_ply::parametros(char *archivo)
       else
         colores_caras[i].g = 0.816 - sum;
     }
-  }
+  } */
 
   calcular_normales_caras();
   colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz

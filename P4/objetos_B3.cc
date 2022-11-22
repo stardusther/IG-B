@@ -755,12 +755,13 @@ _mando::_mando()
   pulsacion_boton_min = 0.05;
 }
 
-void _mando::draw(_modo modo, float r, float g, float b, float grosor)
-{
+
+void _mando::draw(_modo modo, float r, float g, float b, float grosor){
+
 
   // Botones
   glPushMatrix();
-  glTranslatef(0.0, 0.1, 0.175 + pulsacion_boton); // arriba TODO CAMBIAR
+  glTranslatef(0.0, 0.1, 0.175+pulsacion_boton); // arriba TODO: CAMBIAR
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
   arriba.draw(modo, 0, 0, 0, grosor);
@@ -777,7 +778,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor)
   glTranslatef(-0.2, -0.1, 0.175); // izquierda
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  izquierda.draw(modo, 0, 0, 0, grosor);
+  izquierda.draw(modo,0, 0, 0, grosor);
   glPopMatrix();
 
   glPushMatrix();
@@ -793,45 +794,31 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor)
   glScalef(0.65, 0.65, 0.6);
   glRotatef(90, 1, 0, 0);
   // Para las animaciones
-  // glRotatef(giro_joystick, 1, 0, 0);
-  // glRotatef(giro_joystick, 0, 1, 0);
-  glRotatef(giro_joystick, 1, 1, 0);
+  //glRotatef(giro_joystick, 1, 0, 0);
+  //glRotatef(giro_joystick, 0, 1, 0);
+  glRotatef(giro_joystick, 1, 0, 0);
 
   // Pintar
   joystick.draw(modo, 0, 0, 0, grosor);
   glPopMatrix();
 
-  /* // Parte de arriba del mando
-  glPushMatrix();
-  //glScalef(-0.5, -0.5, -0.5);
-  glTranslatef(0.0, alto-0.5, 0.0);
-  parte_arriba.draw(modo, 0.7, 0.7, 0.7, grosor);
-  glPopMatrix(); */
-
-  // Base
+   // Base
   glPushMatrix();
   glTranslatef(0.0, 0.0, 0.0);
   glScalef(0.6, 1.5, 0.2); // tiene el mismo ancho que la pantalla exterior
-  // glScalef(2, 2, 2);
+  //glScalef(2, 2, 2);
   base.draw(modo, r, g, b, grosor);
   glPopMatrix();
 
-  /* // Parte de abajo del mando
-  glPushMatrix();
-  //glScalef(1.0, 0.2, 1.0);
-  glTranslatef(0.0, -alto+0.5, 0.0);
-  parte_abajo.draw(modo, 0, 0, 0, grosor);
-  glPopMatrix();  */
 }
 
-_pantalla::_pantalla()
-{
+_pantalla::_pantalla(){
   pantalla_ext = _cubo(0.7, true, true);
   pantalla_int = _cubo(0.6, true, true);
+  pie = _cubo(0.3, true, true);
 }
 
-void _pantalla::draw(_modo modo, float r, float g, float b, float grosor)
-{
+void _pantalla::draw(_modo modo, float r, float g, float b, float grosor){
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
   pantalla_ext.draw(modo, 0, 0, 0, grosor);
@@ -840,7 +827,14 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor)
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
-  pantalla_int.draw(modo, 0.5, 0.5, 0.5, grosor);
+  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor);
+  glPopMatrix();
+
+  glPushMatrix();
+  glScalef(0.4, 0.9, 0.1);
+  glTranslatef(1.3, -0.47, -1.3);
+  glRotatef(rotacion_pie, 1, 0, 0);
+  pie.draw(modo, 0.2, 0.2, 0.2, grosor);
   glPopMatrix();
 }
 
@@ -849,28 +843,27 @@ _nintendo::_nintendo()
   sacar_mando = 0;
 }
 
-void _nintendo::draw(_modo modo, float r, float g, float b, float grosor)
-{
+void _nintendo::draw(_modo modo, float r, float g, float b, float grosor){
   // Mando azul
-  glPushMatrix();
-  glScalef(0.677, 0.677, 0.7);
-  glTranslatef(-0.4, 0 + sacar_mando, 0);
-  // glTranslatef(0, sacar_mando, 0);
-  mando_izq.draw(modo, 0, 0.73, 0.87, grosor); // azul
-  glPopMatrix();
+    glPushMatrix();
+    glScalef(0.677,0.677,0.7);
+    glTranslatef(-0.4, 0+sacar_mando, 0);
+    //glTranslatef(0, sacar_mando, 0);
+    mando_izq.draw(modo, 0, 0.73, 0.87, grosor); // azul
+    glPopMatrix();
 
   // Base
-  glPushMatrix();
-  glTranslatef(1, 0, 0);
-  glScalef(1, 1, 0.7);
-  pantalla.draw(modo, 0, 0, 1, grosor);
-  glPopMatrix();
+    glPushMatrix();
+    glTranslatef(1, 0, 0);
+    glScalef(1, 1, 0.7);
+    pantalla.draw(modo, 0, 0, 1, grosor);
+    glPopMatrix();
 
   // Mando rojo (reinventado jaja)
-  glPushMatrix();
-  glTranslatef(2.25, 0, 0);
-  glRotatef(180, 0, 0, 1);
-  glScalef(0.677, 0.677, 0.7);
-  mando_dch.draw(modo, 1, 0, 0, grosor); // rojo
-  glPopMatrix();
+    glPushMatrix();
+    glTranslatef(2.25, 0, 0);
+    glRotatef(180, 0, 0, 1);
+    glScalef(0.677, 0.677, 0.7);
+    mando_dch.draw(modo, 1, 0, 0, grosor); // rojo
+    glPopMatrix();
 };

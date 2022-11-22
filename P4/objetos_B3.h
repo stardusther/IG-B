@@ -203,7 +203,6 @@ public:
 };
 
 
-
 //************************************************************************
 // Clase para la pantalla
 //************************************************************************
@@ -211,11 +210,14 @@ public:
 class _pantalla: public _triangulos3D {
 public:
        _pantalla();
+       float rotacion_pie = 0;
+       float rotacion_pie_max = 45;
 void  draw(_modo modo, float r, float g, float b, float grosor);
 
 protected:
        _cubo pantalla_ext;
        _cubo pantalla_int;
+       _cubo pie;
 };
 
 // *****************************************************************
@@ -270,11 +272,11 @@ public:
        _nintendo();
        _mando mando_izq;
        _mando mando_dch;
+       _pantalla pantalla;
+
        float sacar_mando;
        float sacar_mando_max = 2;
 
 void draw(_modo modo, float r, float g, float b, float grosor);
-
-protected:
-       _pantalla pantalla;
+       
 };

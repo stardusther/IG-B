@@ -220,7 +220,7 @@ void _triangulos3D::colors_random()
 
 void _triangulos3D::colors_flat(float r, float g, float b, float p_lx, float p_ly, float p_lz)
 {
-  int i, n_c;
+  int i, num_caras;
   _vertex3f l;
   float modulo, escalar;
   num_caras = caras.size();

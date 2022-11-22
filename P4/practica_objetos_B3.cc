@@ -246,6 +246,9 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case '4':
         modo = SOLID_COLORS;
         break;
+    case '5':
+        modo = SOLID_FLAT;
+        break;
     case 'P':
         t_objeto = PIRAMIDE;
         break;

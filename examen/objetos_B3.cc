@@ -181,6 +181,36 @@ void _triangulos3D::colors_chess(float r1, float g1, float b1, float r2, float g
 // objetos o modelos
 //*************************************************************************
 
+//******************************
+// octaedro
+//******************************
+_octaedro::_octaedro(float tam){
+  // Vertices del octaedro
+  vertices.resize(6);
+  vertices[0].x = 0.0; vertices[0].y = 0.0; vertices[0].z = tam;
+  vertices[1].x = tam; vertices[1].y = 0.0; vertices[1].z = 0.0;
+  vertices[2].x = 0.0; vertices[2].y = tam; vertices[2].z = 0.0;
+  vertices[3].x = -tam; vertices[3].y = 0.0; vertices[3].z = 0.0;
+  vertices[4].x = 0.0; vertices[4].y = -tam; vertices[4].z = 0.0;
+  vertices[5].x = 0.0; vertices[5].y = 0.0; vertices[5].z = -tam;
+
+  // Caras del octaedro
+  caras.resize(8);
+  caras[0]._0 = 0; caras[0]._1 = 1; caras[0]._2 = 2;
+  caras[1]._0 = 0; caras[1]._1 = 2; caras[1]._2 = 3;
+  caras[2]._0 = 0; caras[2]._1 = 3; caras[2]._2 = 4;
+  caras[3]._0 = 0; caras[3]._1 = 4; caras[3]._2 = 1;
+  caras[4]._0 = 5; caras[4]._1 = 2; caras[4]._2 = 1;
+  caras[5]._0 = 5; caras[5]._1 = 3; caras[5]._2 = 2;
+  caras[6]._0 = 5; caras[6]._1 = 4; caras[6]._2 = 3;
+  caras[7]._0 = 5; caras[7]._1 = 1; caras[7]._2 = 4;
+
+  // Colores
+  colors_random();
+
+}
+
+
 //*************************************************************************
 // clase cubo
 //*************************************************************************
@@ -588,20 +618,6 @@ _extrusion::_extrusion(vector<_vertex3f> poligono, float x, float y, float z)
 //************************************************************************
 // práctica 3, objeto jerárquico articulado: NINTENDO SWITCH
 //************************************************************************
-/* _semiesfera::_semiesfera(float radio, int num1, int num2, bool tapa_inf=true, bool tapa_sup=true){
-  vector<_vertex3f> perfil;
-  _vertex3f aux;
-  int i;
-  for (i = 1; i < num1; i++)
-  {
-    aux.x = radio * cos(M_PI * i / (num1 * 1.0) - M_PI / 2.0);
-    aux.y = radio * sin(M_PI * i / (num1 * 1.0) - M_PI / 2.0);
-    aux.z = 0.0;
-    perfil.push_back(aux);
-  }
-  parametros(perfil, num2, 2, tapa_inf, tapa_sup); // ninguna tapa
-  
-} */
 
 _joystick::_joystick()
 {
@@ -751,3 +767,73 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor){
     mando_dch.draw(modo, 1, 0, 0, grosor); // rojo
     glPopMatrix();
 };
+
+//----------------------------------------------------------------
+// Examen de la práctica 3
+//----------------------------------------------------------------
+
+_pirindolo::_pirindolo(){
+  cilindro = _cilindro(0.1, 1, 12, false, false);
+  esfera = _esfera(0.1, 6, 12, true, true);
+}
+
+void _pirindolo::draw(_modo modo, float r, float g, float b, float grosor){
+  float escala_y = 0.5;
+  glPushMatrix();
+  glScalef(0.5, 0.5, 0.5);
+  glTranslatef(0, altura_cilindro+trans_altura, 0);
+  esfera.draw(modo, 0.3, 0.3, 0.3, grosor);
+  glPopMatrix();
+
+  glPushMatrix();
+  glRotatef(180, 0, 0, 1);
+  glTranslatef(0, 0, 0);
+  glScalef(0.2, altura_cilindro+trans_altura, 0.2);
+  cilindro.draw(modo, r, g, b, grosor);
+  glPopMatrix();
+
+}
+
+_brazo::_brazo(){
+  // Inicializar valores 
+  base = _cubo(0.7, true, true);
+  // Para las animaciones
+}
+
+void _brazo::draw(_modo modo, float r, float g, float b, float grosor){
+ 
+  // Base 
+  glPushMatrix();
+  glScalef(largo_base, altura_base, profundidad_base);
+  base.draw(modo, 0, 0, 0, grosor);
+  glPopMatrix();
+
+  // Pirindolo
+  glPushMatrix();
+  glScalef(5,5,5);
+  glTranslatef(largo_base*0.1, altura_base * 0.4, 0);
+  pirindolo.draw(modo, 1, 0, 0, grosor);
+  glPopMatrix();
+}
+
+_construccion::_construccion(){
+  // Inicializar valores 
+  cono = _cono(1, altura_cono, 12, true, true);
+  // Para las animaciones
+}
+
+void _construccion::draw(_modo modo, float r, float g, float b, float grosor){
+  // dibujar el cono (base)
+  glPushMatrix();
+  glScalef(0.2, 0.2, 0.2);
+  glRotatef(rotacion_cono, 0, 1, 0);
+  cono.draw(modo, 0.5, 0.5, 0.5, grosor);
+  glPopMatrix(); 
+
+// dibujar el brazo sobre el cono
+  glPushMatrix();
+  glTranslatef(0.25, altura_cono*0.21, 0);
+  glScalef(0.5, 0.5, 0.5);
+  brazo.draw(modo, 0.5, 0.5, 0.5, grosor);
+  glPopMatrix();
+}

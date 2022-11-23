@@ -48,9 +48,9 @@ _cubo cubo(0.5, false, false);
 _piramide piramide(0.85, 1.3, false, true);
 _objeto_ply ply;
 _rotacion rotacion;
-_cilindro cilindro(1, 2, 6, true, false);
+_cilindro cilindro(1, 2, 150, true, false);
 _cono cono(1, 2, 6, true, true);
-_esfera esfera(1, 6, 6, false, true);
+_esfera esfera(1, 6, 100, false, true);
 //_excavadora excavadora;
 _nintendo nintendo; // P3
 _extrusion *extrusion;
@@ -179,8 +179,11 @@ void luces(){ //en el guion pone que pongamos dos luces y que una se transforme.
     glLightfv(GL_LIGHT1, GL_AMBIENT, luz_ambiente);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, luz_difusa);
     glLightfv(GL_LIGHT1, GL_SPECULAR, luz_difusa);
+    //glPushMatrix();
+    //glRotatef(alfa, 0, 1, 0);
     glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion);
-
+    //glPopMatrix();
+    
     glDisable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
 
@@ -248,6 +251,9 @@ void normal_key(unsigned char Tecla1, int x, int y)
         break;
     case '5':
         modo = SOLID_FLAT;
+        break;
+    case '6':
+        modo = SOLID_SMOOTH;
         break;
     case 'P':
         t_objeto = PIRAMIDE;

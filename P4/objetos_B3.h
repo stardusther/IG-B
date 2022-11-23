@@ -74,7 +74,7 @@ vector<_vertex3i> caras;
 vector<_vertex3f> colores_caras;
 
 vector<_vertex3f> normales_caras;
-vector<_vertex3f> normales_verices;
+vector<_vertex3f> normales_vertices;
 
 //material
 _vertex4f ambiente_difuso;

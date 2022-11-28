@@ -180,9 +180,10 @@ void draw_objects()
 //***************************************************************************
 
 void luces (float alfa, bool luz2_on){  //float alfa, float beta
-	float  luz1[]={1.0, 1.0, 1.0, 0.0},
+	float  //luz1[]={0.4, 0.3, 1.0, 1.0}, // azul neon
+            luz1[]={1.0, 1.0, 0.9, 1.0}, // amarillo
 			pos1[]= {0, 20.0, 40.0, 1.0}, // Cuidado con no ponerla dentro del objeto
-			luz2[]={0.54, 0.89, 0.63, 1.0 },
+			luz2[]={0.3, 0.0, 0.6, 1.0 }, // morado neon
 			pos2[]= {-20.0, 5.0, 50.0, 1.0};
 
 	glLightfv (GL_LIGHT1, GL_DIFFUSE, luz1); 
@@ -306,11 +307,12 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case 'I':
         if(luz2_on){
             luz2_on = false;
-            printf("\nLuz 2 apagada");
+            printf("\nLuz 2 encendida"); // Está al revés porque la primera vez no sale y 
+            // siempre se ejecuta después el refresco de la pantalla
         }
         else{
             luz2_on = true;
-            printf("\nLuz 2 encendida");
+            printf("\nLuz 2 apagada");
         }
         break;
     case 'V':

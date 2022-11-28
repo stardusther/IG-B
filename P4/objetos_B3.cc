@@ -6,6 +6,14 @@
 #include "file_ply_stl.hpp"
 #include <time.h>
 
+// Materiales
+_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_negro = {{0.0, 0.0, 0.0, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.50, 0.50, 0.50, 1.0}, 32.0};
+_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
+_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
+_material cristal_negro = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
+
+
 //*************************************************************************
 // _puntos3D
 //*************************************************************************
@@ -875,6 +883,7 @@ _mando::_mando()
 
 void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material material){
 
+  material = plastico_negro; // Material de los botones
 
   // Botones
   glPushMatrix();
@@ -916,6 +925,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material
   glRotatef(giro_joystick, 1, 0, 0);
 
   // Pintar
+  material = goma_negra;
   joystick.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
@@ -923,7 +933,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material
   glPushMatrix();
   glTranslatef(0.0, 0.0, 0.0);
   glScalef(0.6, 1.5, 0.2); // tiene el mismo ancho que la pantalla exterior
-  //glScalef(2, 2, 2);
+  // Como la base tiene distintos materiales se hace dentro de su draw
   base.draw(modo, r, g, b, grosor, material);
   glPopMatrix();
 
@@ -938,12 +948,14 @@ _pantalla::_pantalla(){
 void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _material material){
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
+  material = plastico_negro;
   pantalla_ext.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
+  material = cristal_negro;
   pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, material);
   glPopMatrix();
 
@@ -951,6 +963,7 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _mater
   glScalef(0.4, 0.9, 0.1);
   glTranslatef(1.3, -0.47, -1.3);
   glRotatef(rotacion_pie, 1, 0, 0);
+  material = plastico_negro;
   pie.draw(modo, 0.2, 0.2, 0.2, grosor, material);
   glPopMatrix();
 }
@@ -966,6 +979,7 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _mater
     glScalef(0.677,0.677,0.7);
     glTranslatef(-0.4, 0+sacar_mando, 0);
     //glTranslatef(0, sacar_mando, 0);
+    material = plastico_azul;
     mando_izq.draw(modo, 0, 0.73, 0.87, grosor, material); // azul
     glPopMatrix();
 
@@ -981,6 +995,7 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _mater
     glTranslatef(2.25, 0, 0);
     glRotatef(180, 0, 0, 1);
     glScalef(0.677, 0.677, 0.7);
+    material = plastico_rojo;
     mando_dch.draw(modo, 1, 0, 0, grosor, material); // rojo
     glPopMatrix();
 };

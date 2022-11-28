@@ -8,10 +8,10 @@
 
 // Materiales
 // Ambiente, Difuso (base), Especular (highlight), Brillo
-_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 32.0};
 //_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {1, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
-_material plastico_negro = {{0.0, 0.0, 0.0, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.50, 0.50, 0.50, 1.0}, 32.0};
-_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0, 0.73, 0.8, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
+_material plastico_negro = {{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.50, 0.50, 0.50, 1.0}, 22.0};
+_material plastico_azul = {{0.0, 0.1, 0.6, 1.0}, {0, 0.73, 0.8, 1.0}, {0.7, 0.6, 0.6, 1.0}, 32.0}; // cambiar
 _material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
 _material cristal_negro = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 70.0};
 
@@ -947,13 +947,13 @@ _pantalla::_pantalla(){
 void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _material material){
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
-  pantalla_ext.draw(modo, 0, 0, 0, grosor, plastico_negro);
+  pantalla_ext.draw(modo, 0, 0, 0, grosor, cristal_negro);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
-  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, cristal_negro);
+  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, plastico_negro);
   glPopMatrix();
 
   glPushMatrix();

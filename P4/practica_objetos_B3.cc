@@ -305,14 +305,10 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case 'I':
         if(luz2_on){
             luz2_on = false;
-            glutPostRedisplay();
-
             printf("\nLuz 2 apagada");
         }
         else{
             luz2_on = true;
-                glutPostRedisplay();
-
             printf("\nLuz 2 encendida");
         }
         break;

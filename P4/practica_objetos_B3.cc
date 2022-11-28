@@ -60,9 +60,10 @@ bool luz2_on = false;
 float alfa = 0.0;
 
 // Materiales
-_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
-_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
-_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
+_material oro = {{ 0.24725f, 0.1995f, 0.0745f, 1.0f }, 
+                 {0.75164f, 0.60648f, 0.22648f, 1.0f}, 
+                 {0.628281f, 0.555802f, 0.366065f, 1.0f}, 
+                 51.2f};
 
 //**************************************************************************
 //
@@ -139,37 +140,37 @@ void draw_objects()
     switch (t_objeto)
     {
     case CUBO:
-        cubo.draw(modo, 0.0, 1.0, 0.0, 5, goma_negra);
+        cubo.draw(modo, 0.0, 1.0, 0.0, 5, oro);
         break;
     case PIRAMIDE:
-        piramide.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        piramide.draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     case OBJETO_PLY:
-        ply.draw(modo, 1.0, 0.6, 0.0, 5, plastico_rojo);
+        ply.draw(modo, 1.0, 0.6, 0.0, 5, oro);
         break;
     case ROTACION:
-        rotacion.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        rotacion.draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     case CILINDRO:
-        cilindro.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        cilindro.draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     case CONO:
-        cono.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        cono.draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     case ESFERA:
-        esfera.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        esfera.draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     case NINTENDO:
         glPushMatrix();
         // glScalef(0.5,0.5,0.5);
         glTranslatef(-1, 0, 0);
-        nintendo.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo); 
+        nintendo.draw(modo, 1.0, 0.0, 0.0, 5, oro); 
         // los colores y el material se van a obviar porque se ponen dentro
         glPopMatrix();
         break;
 
     case EXTRUSION:
-        extrusion->draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        extrusion->draw(modo, 1.0, 0.0, 0.0, 5, oro);
         break;
     }
 }

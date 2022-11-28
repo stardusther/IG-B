@@ -34,9 +34,10 @@ struct _material{
 };
 
 // Materiales
-/* _material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_negro = {{0.0, 0.0, 0.0, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.50, 0.50, 0.50, 1.0}, 32.0};
 _material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
-_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0}; */
+_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
 
 //*************************************************************************
 // clase punto
@@ -45,8 +46,6 @@ _material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 
 class _puntos3D
 {
 public:
-
-  
 	_puntos3D();
 void 	draw_puntos(float r, float g, float b, int grosor);
 
@@ -93,6 +92,7 @@ vector<_vertex3f> normales_vertices;
 _vertex4f ambiente_difuso;
 _vertex4f especular;
 float brillo;
+
 
 };
 

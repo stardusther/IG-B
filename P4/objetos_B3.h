@@ -25,6 +25,19 @@ typedef enum
        SOLID_SMOOTH
 } _modo;
 
+// define a materials struct and declare it as a global variable
+struct _material{
+       GLfloat ambiente[4];
+       GLfloat difusa[4];
+       GLfloat especular[4];
+       GLfloat brillo[1];
+};
+
+// Materiales
+/* _material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
+_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0}; */
+
 //*************************************************************************
 // clase punto
 //*************************************************************************
@@ -53,9 +66,9 @@ public:
 void 	draw_aristas(float r, float g, float b, int grosor);
 void   draw_solido(float r, float g, float b);
 void 	draw_solido_colores();
-void   draw_solido_plano();
-void   draw_solido_suave();
-void 	draw(_modo modo, float r, float g, float b, float grosor);
+void   draw_solido_plano(_material material);
+void   draw_solido_suave(_material material);
+void 	draw(_modo modo, float r, float g, float b, float grosor, _material material);
 
 /* asignación de colores */
 void 	colors_random();
@@ -80,6 +93,8 @@ vector<_vertex3f> normales_vertices;
 _vertex4f ambiente_difuso;
 _vertex4f especular;
 float brillo;
+
+float alfa, beta;
 };
 
 //*************************************************************************
@@ -212,7 +227,7 @@ public:
        _pantalla();
        float rotacion_pie = 0;
        float rotacion_pie_max = 45;
-void  draw(_modo modo, float r, float g, float b, float grosor);
+       void draw(_modo modo, float r, float g, float b, float grosor, _material material);
 
 protected:
        _cubo pantalla_ext;
@@ -227,7 +242,8 @@ protected:
 class _joystick: public _triangulos3D {
 public:
        _joystick();
-void  draw(_modo modo, float r, float g, float b, float grosor);
+       void draw(_modo modo, float r, float g, float b, float grosor, _material material);
+
 protected:
        _cilindro palo_joystick;
        _cilindro boton;
@@ -244,9 +260,9 @@ public:
        float max_giro_joystick = 23;
        float pulsacion_boton;
        float pulsacion_boton_min;
-       
-       void draw(_modo modo, float r, float g, float b, float grosor);
+       void draw(_modo modo, float r, float g, float b, float grosor, _material material);
 
+       
 protected:
        /* float alto;
        float ancho;
@@ -276,7 +292,6 @@ public:
 
        float sacar_mando;
        float sacar_mando_max = 2;
-
-void draw(_modo modo, float r, float g, float b, float grosor);
+       void draw(_modo modo, float r, float g, float b, float grosor, _material material);
        
 };

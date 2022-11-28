@@ -29,7 +29,7 @@ typedef enum
     EXTRUSION,
     NINTENDO
 } _tipo_objeto;
-_tipo_objeto t_objeto = NINTENDO; // por defecto
+_tipo_objeto t_objeto = CUBO; // por defecto
 _modo modo = SOLID;               // por defecto
 
 // variables que definen la posicion de la camara en coordenadas polares
@@ -55,7 +55,10 @@ _esfera esfera(1, 6, 100, false, true);
 _nintendo nintendo; // P3
 _extrusion *extrusion;
 
-// _objeto_ply *ply;
+// Materiales
+_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
+_material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
 
 //**************************************************************************
 //
@@ -132,62 +135,72 @@ void draw_objects()
     switch (t_objeto)
     {
     case CUBO:
-        cubo.draw(modo, 1.0, 0.0, 0.0, 5);
+        cubo.draw(modo, 0.0, 1.0, 0.0, 5, goma_negra);
         break;
     case PIRAMIDE:
-        piramide.draw(modo, 1.0, 0.0, 0.0, 5);
+        piramide.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     case OBJETO_PLY:
-        ply.draw(modo, 1.0, 0.6, 0.0, 5);
+        ply.draw(modo, 1.0, 0.6, 0.0, 5, plastico_rojo);
         break;
     case ROTACION:
-        rotacion.draw(modo, 1.0, 0.0, 0.0, 5);
+        rotacion.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     case CILINDRO:
-        cilindro.draw(modo, 1.0, 0.0, 0.0, 5);
+        cilindro.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     case CONO:
-        cono.draw(modo, 1.0, 0.0, 0.0, 5);
+        cono.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     case ESFERA:
-        esfera.draw(modo, 1.0, 0.0, 0.0, 5);
+        esfera.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     case NINTENDO:
         glPushMatrix();
         // glScalef(0.5,0.5,0.5);
         glTranslatef(-1, 0, 0);
-        nintendo.draw(modo, 1.0, 0.0, 0.0, 5);
+        nintendo.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         glPopMatrix();
         break;
 
     case EXTRUSION:
-        extrusion->draw(modo, 1.0, 0.0, 0.0, 5);
+        extrusion->draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
         break;
     }
 }
 
-
+float alfa = 0, beta = 0;
 //***************************************************************************
 // Funcion para las luces
 //***************************************************************************
 
-void luces(){ //en el guion pone que pongamos dos luces y que una se transforme. En clase solo hemos puesto una luz
-    GLfloat luz_ambiente [] = {0.1,0.1,0.1,1.0},
-            luz_difusa [] = {1.0,1.0,1.0,1.0},
-            luz_posicion [] = {0.0,10.0,10.0,1.0};
-    
-    glLightfv(GL_LIGHT1, GL_AMBIENT, luz_ambiente);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, luz_difusa);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, luz_difusa);
-    //glPushMatrix();
-    //glRotatef(alfa, 0, 1, 0);
-    glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion);
-    //glPopMatrix();
-    
-    glDisable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+void luces (float alfa, float beta){  //float alfa, float beta
+	float  luz1[]={1.0, 1.0, 1.0, 1.0},
+			pos1[]= {0, 20.0, 40.0, 1.0}, // Cuidado con no ponerla dentro del objeto
+			luz2[]={0.54, 0.89, 0.63, 1.0 },
+			pos2[]= {-20.0, 20.0, 40.0, 1.0};
 
-}
+	glLightfv (GL_LIGHT1, GL_DIFFUSE, luz1); 
+	glLightfv (GL_LIGHT1, GL_SPECULAR, luz1); //Si no le ponemos componente esepcular, no tiene brillo, por lo qeu no cambia segun observador
+
+	glPushMatrix();
+	glRotatef(alfa, 0,1,0);
+	glLightfv (GL_LIGHT1, GL_POSITION, pos1);
+	glPopMatrix();
+
+	glLightfv (GL_LIGHT2, GL_DIFFUSE, luz2); 
+	glLightfv (GL_LIGHT2, GL_SPECULAR, luz2);
+
+	glPushMatrix();
+	glRotatef(beta, 0,1,0);
+	glLightfv (GL_LIGHT2, GL_POSITION, pos2);
+	glPopMatrix();
+
+	glDisable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+
+ }
 
 //**************************************************************************
 //
@@ -197,7 +210,7 @@ void draw(void)
 {
     clean_window();
     change_observer();
-    luces();
+    luces(alfa, beta);
     draw_axis();
     draw_objects();
     glutSwapBuffers();

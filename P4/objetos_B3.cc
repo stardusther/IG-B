@@ -83,36 +83,11 @@ void _triangulos3D::calcular_normales_vertices(){
     normales_vertices[i].z = 0;
   }
 
-  // Sumar las normales de las caras para obtener las normales de los vértices (fórmula de la media)
-  /* for(int i = 0; i < caras.size(); i++){
-    normales_vertices[caras[i]._0].x += normales_caras[i].x;
-    normales_vertices[caras[i]._0].y += normales_caras[i].y;
-    normales_vertices[caras[i]._0].z += normales_caras[i].z;
-
-    normales_vertices[caras[i]._1].x += normales_caras[i].x;
-    normales_vertices[caras[i]._1].y += normales_caras[i].y;
-    normales_vertices[caras[i]._1].z += normales_caras[i].z;
-
-    normales_vertices[caras[i]._2].x += normales_caras[i].x;
-    normales_vertices[caras[i]._2].y += normales_caras[i].y;
-    normales_vertices[caras[i]._2].z += normales_caras[i].z;
-  } */
-
   for(int i = 0; i < caras.size(); i++){
     normales_vertices[caras[i]._0] += normales_caras[i];
     normales_vertices[caras[i]._1] += normales_caras[i];
     normales_vertices[caras[i]._2] += normales_caras[i];
   }
-
-  /* for(int i=0; i<vertices.size(); i++)
-  {
-    modulo = sqrt(normales_vertices[i].x * normales_vertices[i].x +
-                  normales_vertices[i].y * normales_vertices[i].y +
-                  normales_vertices[i].z * normales_vertices[i].z);
-    normales_vertices[i].x /= modulo;
-    normales_vertices[i].y /= modulo;
-    normales_vertices[i].z /= modulo;
-  } */
 
   for (int i=0; i<caras.size(); i++){
       normales_vertices[caras[i]._0]+=normales_caras[i];
@@ -171,6 +146,7 @@ void _triangulos3D::draw_solido(float r, float g, float b)
   int i;
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glColor3f(r, g, b);
+
   glBegin(GL_TRIANGLES);
   for (i = 0; i < caras.size(); i++)
   {
@@ -203,16 +179,17 @@ void _triangulos3D::draw_solido_colores()
 //*************************************************************************
 // dibujar en modo iluminacion para las caras
 //*************************************************************************
-void _triangulos3D::draw_solido_plano()
+void _triangulos3D::draw_solido_plano(_material material)
 {
   int i;
   glEnable(GL_LIGHTING);
   glShadeModel(GL_FLAT);
   glEnable(GL_NORMALIZE); // Para que se normalicen las normales (en el caso de que haya escalado)
 
-  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, (GLfloat *)&ambiente_difuso);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (GLfloat *)&especular);
-  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, brillo);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material.ambiente);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material.difusa);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material.especular);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material.brillo);
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glBegin(GL_TRIANGLES);
@@ -230,15 +207,16 @@ void _triangulos3D::draw_solido_plano()
   glDisable(GL_LIGHTING);
 }
 
-void _triangulos3D::draw_solido_suave(){
+void _triangulos3D::draw_solido_suave(_material material){
   int i;
   glEnable(GL_LIGHTING);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_NORMALIZE); // Para que se normalicen las normales (en el caso de que haya escalado)
 
-  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, (GLfloat *)&ambiente_difuso);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (GLfloat *)&especular);
-  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, brillo);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material.ambiente);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material.difusa);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material.especular);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material.brillo);
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glBegin(GL_TRIANGLES);
@@ -278,7 +256,7 @@ void _triangulos3D::draw_solido_suave(){
 // dibujar con distintos modos
 //*************************************************************************
 
-void _triangulos3D::draw(_modo modo, float r, float g, float b, float grosor)
+void _triangulos3D::draw(_modo modo, float r, float g, float b, float grosor, _material material)
 {
   switch (modo)
   {
@@ -295,10 +273,10 @@ void _triangulos3D::draw(_modo modo, float r, float g, float b, float grosor)
     draw_solido_colores();
     break;
   case SOLID_FLAT:
-    draw_solido_plano();
+    draw_solido_plano(material);
     break;
   case SOLID_SMOOTH:
-    draw_solido_suave();
+    draw_solido_suave(material);
     break;
   }
 }
@@ -863,15 +841,15 @@ _joystick::_joystick()
   boton = _cilindro(0.3, 0.2, 12, true, true);
 };
 
-void _joystick::draw(_modo modo, float r, float g, float b, float grosor)
+void _joystick::draw(_modo modo, float r, float g, float b, float grosor, _material material)
 {
   glPushMatrix();
-  palo_joystick.draw(modo, r, g, b, grosor);
+  palo_joystick.draw(modo, r, g, b, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(0, 0.2, 0);
-  boton.draw(modo, r, g, b, grosor);
+  boton.draw(modo, r, g, b, grosor, material);
   glPopMatrix();
 }
 
@@ -895,7 +873,7 @@ _mando::_mando()
 }
 
 
-void _mando::draw(_modo modo, float r, float g, float b, float grosor){
+void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material material){
 
 
   // Botones
@@ -903,28 +881,28 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor){
   glTranslatef(0.0, 0.1, 0.175+pulsacion_boton); // arriba TODO: CAMBIAR
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  arriba.draw(modo, 0, 0, 0, grosor);
+  arriba.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(0.0, -0.3, 0.175); // abajo
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  abajo.draw(modo, 0, 0, 0, grosor);
+  abajo.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(-0.2, -0.1, 0.175); // izquierda
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  izquierda.draw(modo,0, 0, 0, grosor);
+  izquierda.draw(modo,0, 0, 0, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(0.2, -0.1, 0.175); // derecha
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  derecha.draw(modo, 0, 0, 0, grosor);
+  derecha.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
   // Joystick
@@ -938,7 +916,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor){
   glRotatef(giro_joystick, 1, 0, 0);
 
   // Pintar
-  joystick.draw(modo, 0, 0, 0, grosor);
+  joystick.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
    // Base
@@ -946,7 +924,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor){
   glTranslatef(0.0, 0.0, 0.0);
   glScalef(0.6, 1.5, 0.2); // tiene el mismo ancho que la pantalla exterior
   //glScalef(2, 2, 2);
-  base.draw(modo, r, g, b, grosor);
+  base.draw(modo, r, g, b, grosor, material);
   glPopMatrix();
 
 }
@@ -957,23 +935,23 @@ _pantalla::_pantalla(){
   pie = _cubo(0.3, true, true);
 }
 
-void _pantalla::draw(_modo modo, float r, float g, float b, float grosor){
+void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _material material){
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
-  pantalla_ext.draw(modo, 0, 0, 0, grosor);
+  pantalla_ext.draw(modo, 0, 0, 0, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
-  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor);
+  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, material);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(0.4, 0.9, 0.1);
   glTranslatef(1.3, -0.47, -1.3);
   glRotatef(rotacion_pie, 1, 0, 0);
-  pie.draw(modo, 0.2, 0.2, 0.2, grosor);
+  pie.draw(modo, 0.2, 0.2, 0.2, grosor, material);
   glPopMatrix();
 }
 
@@ -982,20 +960,20 @@ _nintendo::_nintendo()
   sacar_mando = 0;
 }
 
-void _nintendo::draw(_modo modo, float r, float g, float b, float grosor){
+void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _material material){
   // Mando azul
     glPushMatrix();
     glScalef(0.677,0.677,0.7);
     glTranslatef(-0.4, 0+sacar_mando, 0);
     //glTranslatef(0, sacar_mando, 0);
-    mando_izq.draw(modo, 0, 0.73, 0.87, grosor); // azul
+    mando_izq.draw(modo, 0, 0.73, 0.87, grosor, material); // azul
     glPopMatrix();
 
   // Base
     glPushMatrix();
     glTranslatef(1, 0, 0);
     glScalef(1, 1, 0.7);
-    pantalla.draw(modo, 0, 0, 1, grosor);
+    pantalla.draw(modo, 0, 0, 1, grosor, material);
     glPopMatrix();
 
   // Mando rojo (reinventado jaja)
@@ -1003,6 +981,6 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor){
     glTranslatef(2.25, 0, 0);
     glRotatef(180, 0, 0, 1);
     glScalef(0.677, 0.677, 0.7);
-    mando_dch.draw(modo, 1, 0, 0, grosor); // rojo
+    mando_dch.draw(modo, 1, 0, 0, grosor, material); // rojo
     glPopMatrix();
 };

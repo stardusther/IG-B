@@ -55,6 +55,10 @@ _esfera esfera(1, 6, 100, false, true);
 _nintendo nintendo; // P3
 _extrusion *extrusion;
 
+// Luces
+bool luz2_on = false;
+float alfa = 0.0;
+
 // Materiales
 _material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
 _material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
@@ -159,7 +163,8 @@ void draw_objects()
         glPushMatrix();
         // glScalef(0.5,0.5,0.5);
         glTranslatef(-1, 0, 0);
-        nintendo.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo);
+        nintendo.draw(modo, 1.0, 0.0, 0.0, 5, plastico_rojo); 
+        // los colores y el material se van a obviar porque se ponen dentro
         glPopMatrix();
         break;
 
@@ -169,22 +174,20 @@ void draw_objects()
     }
 }
 
-float alfa = 0, beta = 0;
 //***************************************************************************
 // Funcion para las luces
 //***************************************************************************
 
-void luces (float alfa, float beta){  //float alfa, float beta
-	float  luz1[]={1.0, 1.0, 1.0, 1.0},
+void luces (float alfa, bool luz2_on){  //float alfa, float beta
+	float  luz1[]={1.0, 1.0, 1.0, 0.0},
 			pos1[]= {0, 20.0, 40.0, 1.0}, // Cuidado con no ponerla dentro del objeto
 			luz2[]={0.54, 0.89, 0.63, 1.0 },
-			pos2[]= {-20.0, 20.0, 40.0, 1.0};
+			pos2[]= {-20.0, 5.0, 50.0, 1.0};
 
 	glLightfv (GL_LIGHT1, GL_DIFFUSE, luz1); 
 	glLightfv (GL_LIGHT1, GL_SPECULAR, luz1); //Si no le ponemos componente esepcular, no tiene brillo, por lo qeu no cambia segun observador
 
 	glPushMatrix();
-	glRotatef(alfa, 0,1,0);
 	glLightfv (GL_LIGHT1, GL_POSITION, pos1);
 	glPopMatrix();
 
@@ -192,13 +195,17 @@ void luces (float alfa, float beta){  //float alfa, float beta
 	glLightfv (GL_LIGHT2, GL_SPECULAR, luz2);
 
 	glPushMatrix();
-	glRotatef(beta, 0,1,0);
+	glRotatef(alfa, 0, 1, 0);
 	glLightfv (GL_LIGHT2, GL_POSITION, pos2);
 	glPopMatrix();
 
 	glDisable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
-	glEnable(GL_LIGHT2);
+
+    if(luz2_on)
+	    glEnable(GL_LIGHT2);
+    else
+        glDisable(GL_LIGHT2);
 
  }
 
@@ -210,7 +217,7 @@ void draw(void)
 {
     clean_window();
     change_observer();
-    luces(alfa, beta);
+    luces(alfa, luz2_on);
     draw_axis();
     draw_objects();
     glutSwapBuffers();
@@ -289,11 +296,31 @@ void normal_key(unsigned char Tecla1, int x, int y)
     case 'E':
         t_objeto = ESFERA;
         break;
-    case 'S':
+    case 'A':
         t_objeto = NINTENDO;
         break;
     case 'X':
         t_objeto = EXTRUSION;
+        break;
+    case 'I':
+        if(luz2_on){
+            luz2_on = false;
+            glutPostRedisplay();
+
+            printf("\nLuz 2 apagada");
+        }
+        else{
+            luz2_on = true;
+                glutPostRedisplay();
+
+            printf("\nLuz 2 encendida");
+        }
+        break;
+    case 'V':
+        alfa += 5;
+        break;
+    case 'B':
+        alfa -= 5;
         break;
     }
     glutPostRedisplay();

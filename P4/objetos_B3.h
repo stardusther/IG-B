@@ -94,7 +94,6 @@ _vertex4f ambiente_difuso;
 _vertex4f especular;
 float brillo;
 
-float alfa, beta;
 };
 
 //*************************************************************************

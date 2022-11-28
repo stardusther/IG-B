@@ -7,11 +7,13 @@
 #include <time.h>
 
 // Materiales
+// Ambiente, Difuso (base), Especular (highlight), Brillo
 _material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
+//_material plastico_rojo = {{0.0, 0.0, 0.0, 1.0}, {1, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25};
 _material plastico_negro = {{0.0, 0.0, 0.0, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.50, 0.50, 0.50, 1.0}, 32.0};
-_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0.5, 0.0, 0.0, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
+_material plastico_azul = {{0.0, 0.0, 0.0, 1.0}, {0, 0.73, 0.8, 1.0}, {0.7, 0.6, 0.6, 1.0}, 0.25}; // cambiar
 _material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
-_material cristal_negro = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
+_material cristal_negro = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 70.0};
 
 
 //*************************************************************************
@@ -112,9 +114,9 @@ void _triangulos3D::calcular_normales_vertices(){
 _triangulos3D::_triangulos3D()
 {
   // Inicialización de la luz ambiente
-  ambiente_difuso = _vertex4f(1.0, 1.0, 1.0, 1.0);
+  /* ambiente_difuso = _vertex4f(1.0, 1.0, 1.0, 1.0);
   especular = _vertex4f(0.7, 0.7, 0.7, 1.0);
-  brillo = 50; // Antes era 110, pero brilla más que mi alma así que lo he bajado
+  brillo = 100; // Antes era 110, pero brilla más que mi alma así que lo he bajado */
 }
 
 //*************************************************************************
@@ -320,7 +322,7 @@ void _triangulos3D::colors_flat(float r, float g, float b, float p_lx, float p_l
   for (int i = 0; i < num_caras; i++) {
     colores_caras[i].r = 0.1 * r;
     colores_caras[i].g = 0.1 * g;
-    colores_caras[i].b = 0.101 * b; // 0.101 por algo de que las sombras se ven más azules en la vida real
+    colores_caras[i].b = 0.101 * b;
     l.x = p_lx - vertices[caras[i]._0].x;
     l.y = p_ly - vertices[caras[i]._0].y;
     l.z = p_lz - vertices[caras[i]._0].z;
@@ -349,7 +351,7 @@ void _triangulos3D::colors_smooth(float r, float g, float b, float p_lx, float p
   for (int i = 0; i < num_caras; i++) {
     colores_caras[i].r = 0.1 * r;
     colores_caras[i].g = 0.1 * g;
-    colores_caras[i].b = 0.101 * b; // 0.101 por algo de que las sombras se ven más azules en la vida real
+    colores_caras[i].b = 0.101 * b;
     l.x = p_lx - vertices[caras[i]._0].x;
     l.y = p_ly - vertices[caras[i]._0].y;
     l.z = p_lz - vertices[caras[i]._0].z;
@@ -511,7 +513,7 @@ _piramide::_piramide(float tam, float al, bool tapa_inf, bool tapa_sup)
   colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
-  colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // ambiando los tres ultimos parámetros cambiamos de dónde viene la luz
+  colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
 
 }
 
@@ -883,35 +885,33 @@ _mando::_mando()
 
 void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material material){
 
-  material = plastico_negro; // Material de los botones
-
   // Botones
   glPushMatrix();
   glTranslatef(0.0, 0.1, 0.175+pulsacion_boton); // arriba TODO: CAMBIAR
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  arriba.draw(modo, 0, 0, 0, grosor, material);
+  arriba.draw(modo, 0, 0, 0, grosor, plastico_negro);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(0.0, -0.3, 0.175); // abajo
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  abajo.draw(modo, 0, 0, 0, grosor, material);
+  abajo.draw(modo, 0, 0, 0, grosor, plastico_negro);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(-0.2, -0.1, 0.175); // izquierda
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  izquierda.draw(modo,0, 0, 0, grosor, material);
+  izquierda.draw(modo, 0, 0, 0, grosor, plastico_negro);
   glPopMatrix();
 
   glPushMatrix();
   glTranslatef(0.2, -0.1, 0.175); // derecha
   glRotatef(90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
-  derecha.draw(modo, 0, 0, 0, grosor, material);
+  derecha.draw(modo, 0, 0, 0, grosor, plastico_negro);
   glPopMatrix();
 
   // Joystick
@@ -925,15 +925,14 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material
   glRotatef(giro_joystick, 1, 0, 0);
 
   // Pintar
-  material = goma_negra;
-  joystick.draw(modo, 0, 0, 0, grosor, material);
+  joystick.draw(modo, 0, 0, 0, grosor, goma_negra);
   glPopMatrix();
 
    // Base
   glPushMatrix();
   glTranslatef(0.0, 0.0, 0.0);
   glScalef(0.6, 1.5, 0.2); // tiene el mismo ancho que la pantalla exterior
-  // Como la base tiene distintos materiales se hace dentro de su draw
+  // Como la base tiene dos colores distintos es en otro lado
   base.draw(modo, r, g, b, grosor, material);
   glPopMatrix();
 
@@ -948,23 +947,20 @@ _pantalla::_pantalla(){
 void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _material material){
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
-  material = plastico_negro;
-  pantalla_ext.draw(modo, 0, 0, 0, grosor, material);
+  pantalla_ext.draw(modo, 0, 0, 0, grosor, plastico_negro);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
-  material = cristal_negro;
-  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, material);
+  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, cristal_negro);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(0.4, 0.9, 0.1);
   glTranslatef(1.3, -0.47, -1.3);
   glRotatef(rotacion_pie, 1, 0, 0);
-  material = plastico_negro;
-  pie.draw(modo, 0.2, 0.2, 0.2, grosor, material);
+  pie.draw(modo, 0.2, 0.2, 0.2, grosor, plastico_negro);
   glPopMatrix();
 }
 
@@ -979,8 +975,7 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _mater
     glScalef(0.677,0.677,0.7);
     glTranslatef(-0.4, 0+sacar_mando, 0);
     //glTranslatef(0, sacar_mando, 0);
-    material = plastico_azul;
-    mando_izq.draw(modo, 0, 0.73, 0.87, grosor, material); // azul
+    mando_izq.draw(modo, 0, 0.73, 0.87, grosor, plastico_azul); // azul
     glPopMatrix();
 
   // Base
@@ -995,7 +990,6 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _mater
     glTranslatef(2.25, 0, 0);
     glRotatef(180, 0, 0, 1);
     glScalef(0.677, 0.677, 0.7);
-    material = plastico_rojo;
-    mando_dch.draw(modo, 1, 0, 0, grosor, material); // rojo
+    mando_dch.draw(modo, 1, 0, 0, grosor, plastico_rojo); // rojo
     glPopMatrix();
 };

@@ -48,9 +48,9 @@ _cubo cubo(0.5, false, false);
 _piramide piramide(0.85, 1.3, false, true);
 _objeto_ply ply;
 _rotacion rotacion;
-_cilindro cilindro(1, 2, 150, true, false);
+_cilindro cilindro(1, 2, 32, true, false);
 _cono cono(1, 2, 6, true, true);
-_esfera esfera(1, 6, 100, false, true);
+_esfera esfera(1, 6, 50, false, true);
 //_excavadora excavadora;
 _nintendo nintendo; // P3
 _extrusion *extrusion;
@@ -180,24 +180,29 @@ void draw_objects()
 //***************************************************************************
 
 void luces (float alfa, bool luz2_on){  //float alfa, float beta
-	float  //luz1[]={0.4, 0.3, 1.0, 1.0}, // azul neon
-            luz1[]={1.0, 1.0, 0.9, 1.0}, // amarillo
+	float    luz1[]={0.4, 0.3, 1.0, 1.0}, // azul neon
+            luz_blanca[] = {1.0, 1.0, 1.0, 1.0},
 			pos1[]= {0, 20.0, 40.0, 1.0}, // Cuidado con no ponerla dentro del objeto
-			luz2[]={0.3, 0.0, 0.6, 1.0 }, // morado neon
-			pos2[]= {-20.0, 5.0, 50.0, 1.0};
 
-	glLightfv (GL_LIGHT1, GL_DIFFUSE, luz1); 
-	glLightfv (GL_LIGHT1, GL_SPECULAR, luz1); //Si no le ponemos componente esepcular, no tiene brillo, por lo qeu no cambia segun observador
+			luz2[]={0.3, 0.0, 0.6, 1.0}, // morado neon
+			pos2[]= {-20.0, 0.0, 100.0, 1.0},
+
+            luz3[] = {0.8, 0.0, 0.8, 1.0}; // rosa neon
+
+	glLightfv (GL_LIGHT1, GL_DIFFUSE, luz_blanca); 
+	glLightfv (GL_LIGHT1, GL_SPECULAR, luz_blanca); 
+    // Si no le ponemos componente especular, no tiene brillo, 
+    // por lo que no cambia segun observador
 
 	glPushMatrix();
-	glLightfv (GL_LIGHT1, GL_POSITION, pos1);
+	glLightfv (GL_LIGHT1, GL_AMBIENT, luz_blanca);
 	glPopMatrix();
 
 	glLightfv (GL_LIGHT2, GL_DIFFUSE, luz2); 
 	glLightfv (GL_LIGHT2, GL_SPECULAR, luz2);
 
 	glPushMatrix();
-	glRotatef(alfa, 0, 1, 0);
+	glRotatef(alfa, 1, 0, 0);
 	glLightfv (GL_LIGHT2, GL_POSITION, pos2);
 	glPopMatrix();
 

@@ -476,7 +476,7 @@ _cubo::_cubo(float tam, bool tapa_inf, bool tapa_sup)
   }
 
   // colores de las caras
-  //colors_random();
+  colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
   //colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
@@ -533,7 +533,7 @@ _piramide::_piramide(float tam, float al, bool tapa_inf, bool tapa_sup)
   }
 
   // colores de las caras
-  //colors_random();
+  colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
   //colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
@@ -723,6 +723,8 @@ void _rotacion::parametros(vector<_vertex3f> perfil, int num, int tipo, bool tap
   }
 
   // colores de las caras
+  colors_random();
+
   calcular_normales_caras();
   calcular_normales_vertices();
 
@@ -907,7 +909,6 @@ _mando::_mando()
 
 
 void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material material){
-
   // Botones
   glPushMatrix();
   glTranslatef(0.0, 0.1, 0.175+pulsacion_boton); // arriba TODO: CAMBIAR
@@ -968,6 +969,7 @@ _pantalla::_pantalla(){
 }
 
 void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _material material){
+  // Pintar la pantalla
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
   pantalla_ext.draw(modo, 0, 0, 0, grosor, cristal_negro);

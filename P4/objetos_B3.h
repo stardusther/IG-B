@@ -33,6 +33,13 @@ struct _material{
        GLfloat brillo[1];
 };
 
+// Permite guardar el modo de coloreado (para que no se sobreescriba)
+struct active_color_mode{
+       bool randomcolors = false;
+       bool flat = false;
+       bool smooth = false;
+};
+
 //*************************************************************************
 // clase punto
 //*************************************************************************

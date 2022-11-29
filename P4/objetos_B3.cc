@@ -15,6 +15,8 @@ _material plastico_azul = {{0.0, 0.1, 0.6, 1.0}, {0, 0.73, 0.8, 1.0}, {0.7, 0.6,
 _material goma_negra = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 10.0};
 _material cristal_negro = {{0.02, 0.02, 0.02, 1.0}, {0.01, 0.01, 0.01, 1.0}, {0.4, 0.4, 0.4, 1.0}, 70.0};
 
+active_color_mode active;
+
 
 //*************************************************************************
 // _puntos3D
@@ -173,6 +175,13 @@ void _triangulos3D::draw_solido(float r, float g, float b)
 
 void _triangulos3D::draw_solido_colores()
 {
+  if(!active.randomcolors){
+      colors_random();
+      active.flat = false;
+      active.smooth = false;
+      active.randomcolors = true;
+  }
+
   int i;
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glBegin(GL_TRIANGLES);
@@ -191,6 +200,13 @@ void _triangulos3D::draw_solido_colores()
 //*************************************************************************
 void _triangulos3D::draw_solido_plano(_material material)
 {
+  if(!active.flat){
+      colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // calculamos el color
+      active.flat = true;
+      active.smooth = false;
+      active.randomcolors = false;
+  }
+
   int i;
   glEnable(GL_LIGHTING);
   glShadeModel(GL_FLAT);
@@ -218,6 +234,13 @@ void _triangulos3D::draw_solido_plano(_material material)
 }
 
 void _triangulos3D::draw_solido_suave(_material material){
+  
+  if(!active.smooth){
+      colors_smooth(0.9,0.7,0.0,-20.0,20.0,-20.0);
+      active.flat = false;
+      active.smooth = true;
+      active.randomcolors = false;
+  }
   int i;
   glEnable(GL_LIGHTING);
   glShadeModel(GL_SMOOTH);
@@ -453,11 +476,11 @@ _cubo::_cubo(float tam, bool tapa_inf, bool tapa_sup)
   }
 
   // colores de las caras
-  colors_random();
+  //colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
-  colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
-
+  //colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
+  //colors_smooth(0.9,0.7,0.0,-20.0,20.0,-20.0);
 }
 
 //*************************************************************************
@@ -510,11 +533,11 @@ _piramide::_piramide(float tam, float al, bool tapa_inf, bool tapa_sup)
   }
 
   // colores de las caras
-  colors_random();
+  //colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
-  colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
-
+  //colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
+  //colors_smooth(0.9,0.7,0.0,-20.0,20.0,-20.0);
 }
 
 //*************************************************************************
@@ -700,11 +723,11 @@ void _rotacion::parametros(vector<_vertex3f> perfil, int num, int tipo, bool tap
   }
 
   // colores de las caras
-  colors_random();
   calcular_normales_caras();
   calcular_normales_vertices();
 
-  colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
+  //colors_flat(0.9,0.7,0.0,-20.0,20.0,-20.0); // Cambiando los tres ultimos parámetros cambiamos de dónde viene la luz
+  //colors_smooth(0.9,0.7,0.0,-20.0,20.0,-20.0);
 }
 
 //************************************************************************
@@ -940,7 +963,7 @@ void _mando::draw(_modo modo, float r, float g, float b, float grosor, _material
 
 _pantalla::_pantalla(){
   pantalla_ext = _cubo(0.7, true, true);
-  pantalla_int = _cubo(0.6, true, true);
+  pantalla_int = _cubo(0.6, true, true); // no sé por qué están al revés
   pie = _cubo(0.3, true, true);
 }
 

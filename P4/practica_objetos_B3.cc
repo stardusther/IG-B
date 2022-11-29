@@ -321,10 +321,12 @@ void normal_key(unsigned char Tecla1, int x, int y)
         }
         break;
     case 'V':
-        alfa += 5;
+        if(luz2_on)
+            alfa += 5;
         break;
     case 'B':
-        alfa -= 5;
+        if(luz2_on)
+            alfa -= 5;
         break;
     }
     glutPostRedisplay();

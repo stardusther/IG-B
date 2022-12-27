@@ -508,7 +508,7 @@ void special_key(int Tecla1, int x, int y)
 
 }
 
-/* void procesar_color(unsigned char color[3]){
+void procesar_color(unsigned char color[3]){
     for(int i = 0; i<nintendo.piezas; i++){
         if(color[0] == nintendo.color_select[i].r && 
            color[1] == nintendo.color_select[i].g && 
@@ -529,11 +529,13 @@ void special_key(int Tecla1, int x, int y)
         }
     }
 }
- */
 
-void procesar_color(unsigned char color[3]){
+
+/* void procesar_color(unsigned char color[3]){
     for(int i = 0; i<nintendo.piezas; i++){
-        if(color[0] == nintendo.color_select[0][i]){
+        if(color[0] == nintendo.color_select[0][0] && 
+           color[1] == nintendo.color_select[0][1] && 
+           color[2] == nintendo.color_select[0][2]){
             if(nintendo.activo[i] == 0)
             {
                 nintendo.activo[i] = 1;
@@ -549,7 +551,7 @@ void procesar_color(unsigned char color[3]){
             glutPostRedisplay();
         }
     }
-}
+} */
 
 
 void pick_color(int x, int y){

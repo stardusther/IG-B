@@ -1,3 +1,6 @@
+# IMPORTANTE    
+Debido a que éstas prácticas se han desarrollado en un Mac, el makefile y las cabeceras han sido cambiados para poder ejecutarse en este sistema operativo. Por lo tanto, le adjunto dos Makefiles: el que he estado usando durante todo el desarrollo (makefile_mac) y el que se puede ejecutar en linux (makefile).
+
 # Práctica 3. Menu
 
 Q → salir
@@ -42,6 +45,8 @@ V ó B → Rotar luz 2
 
 # Vista ortogonal
 T → Vista ortogonal
+
+\+ / - → Aumentar/reducir el escalado (en Mac no funciona el botón de la rueda del ratón)
 
 Rueda del ratón → Aumentar/reducir el escalado
 

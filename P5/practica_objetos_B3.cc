@@ -398,12 +398,12 @@ void normal_key(unsigned char Tecla1, int x, int y)
         else
             ortogonal = false;
         break;
-/*     case '+':
-        escalado -= 0.1;
+     case '+':
+        factor /= 1.1;
         break;
     case '-':
-        escalado += 0.1;
-        break; */
+        factor *= 1.1;
+        break; 
     }
 
     glutPostRedisplay();
@@ -496,30 +496,6 @@ void procesar_color(unsigned char color[3]){
         }
     }
 }
-
-
-/* void procesar_color(unsigned char color[3]){
-    for(int i = 0; i<nintendo.piezas; i++){
-        if(color[0] == nintendo.color_select[0][0] && 
-           color[1] == nintendo.color_select[0][1] && 
-           color[2] == nintendo.color_select[0][2]){
-            if(nintendo.activo[i] == 0)
-            {
-                nintendo.activo[i] = 1;
-                printf("\nPieza [%d] desactivada ----> ", i); // Está al revés para que los mensajes se vean bien
-            }
-            else
-            {
-                nintendo.activo[i] = 0;
-                printf("\nPieza [%d] activada ----> ", i);
-            }
-
-            
-            glutPostRedisplay();
-        }
-    }
-} */
-
 
 void pick_color(int x, int y){
     unsigned char color[3];

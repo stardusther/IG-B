@@ -967,7 +967,6 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _mater
   pantalla_int.draw(modo, r+0.1, g+0.1, b+0.1, grosor, plastico_negro);
   glPopMatrix();
 
-  //r=g=b=0.2;
   glPushMatrix();
   glScalef(0.4, 0.9, 0.1);
   glTranslatef(1.3, -0.47, -1.3);
@@ -995,9 +994,6 @@ _nintendo::_nintendo()
 
 void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _material material)
 {
-  /* r_p = color_pick.r;
-  g_p = color_pick.g;
-  b_p = color_pick.b; */
 
   r = 0.0;
   g = 0.73;

@@ -294,7 +294,6 @@ public:
        _vertex3f color_pick;
        vector<int> activo;
        int piezas;
-       int grosor_select;
        vector<_vertex3i> color_select;
 
        float sacar_mando;

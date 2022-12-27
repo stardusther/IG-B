@@ -978,59 +978,102 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _mater
 _nintendo::_nintendo()
 {
   sacar_mando = 0;
-  int color=80;
+  int color=0;
   piezas=3;
-  grosor_select=2;
   color_pick=_vertex3f(1.0,0.0,0.0); 
   color_select.resize(piezas);
   activo.resize(piezas);
+  
+  for (int i=0; i<piezas; i++){
+    color_select[i].r=color_select[i].g=color_select[i].b=color;
+    color+=20;
+    activo[i]=0;
 
+    if(i == piezas -1){
+      color = 15;
+    }
+  }
   
 }
 
-void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _material material){
-  
-  float r_p,g_p,b_p;
-  int tam=2;
-  r_p=color_pick.r;
-  g_p=color_pick.g;
-  b_p=color_pick.b;
+void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _material material)
+{
+  float r_p, g_p, b_p;
+
+  /* r_p = color_pick.r;
+  g_p = color_pick.g;
+  b_p = color_pick.b; */
+
+  r = 0.0;
+  g = 0.73;
+  b = 0.87;
 
   // Mando azul
-    glPushMatrix();
-    glScalef(0.677,0.677,0.7);
-    glTranslatef(-0.4, 0+sacar_mando, 0);
-    //glTranslatef(0, sacar_mando, 0);
-    if (activo[0]==1)  
-      mando_izq.draw(EDGES, r_p, g_p, b_p, grosor, cristal_negro); // azul
-    else 
-      mando_izq.draw(modo, 0, 0.73, 0.87, grosor, plastico_azul); // azul
-    glPopMatrix();
+  glPushMatrix();
+  glScalef(0.677, 0.677, 0.7);
+  glTranslatef(-0.4, 0 + sacar_mando, 0);
+  if (activo[0] == 1)
+    mando_izq.draw(EDGES, r, g, b, grosor, plastico_azul); // azul
+  else 
+    mando_izq.draw(modo, r, g, b, grosor, plastico_azul);
+  glPopMatrix();
+
+  r = 0.0;
+  g = 0.0;
+  b = 1.0;
 
   // Base
-    glPushMatrix();
-    glTranslatef(1, 0, 0);
-    glScalef(1, 1, 0.7);
-    pantalla.draw(modo, 0, 0, 1, grosor, material);
-    glPopMatrix();
+  glPushMatrix();
+  glTranslatef(1, 0, 0);
+  glScalef(1, 1, 0.7);
+  if (activo[1] == 1)
+    pantalla.draw(EDGES, r, g, b, grosor, cristal_negro);
+  else
+    pantalla.draw(modo, r, g, b, grosor, cristal_negro);
+  glPopMatrix();
+
+  r = 1.0;
+  g = 0.0;
+  b = 0.0;
 
   // Mando rojo (reinventado jaja)
-    glPushMatrix();
-    glTranslatef(2.25, 0, 0);
-    glRotatef(180, 0, 0, 1);
-    glScalef(0.677, 0.677, 0.7);
-    mando_dch.draw(modo, 1, 0, 0, grosor, plastico_rojo); // rojo
-    glPopMatrix();
+  glPushMatrix();
+  glTranslatef(2.25, 0, 0);
+  glRotatef(180, 0, 0, 1);
+  glScalef(0.677, 0.677, 0.7);
+  if (activo[2] == 1)
+    mando_dch.draw(EDGES, r, g, b, grosor, plastico_rojo); // rojo
+  else
+    mando_dch.draw(modo, r, g, b, grosor, plastico_rojo); // rojo
+  glPopMatrix();
 };
 
-void _nintendo::seleccion(){
+void _nintendo::seleccion()
+{
+  _vertex3i color;
+
+  color = color_select[0];
+
   glPushMatrix();
-  _vertex3i color = color_select[0];
-
-  glScalef(0.677,0.677,0.7);
-  glTranslatef(-0.4, 0+sacar_mando, 0);
-  //glTranslatef(0, sacar_mando, 0);
+  glScalef(0.677, 0.677, 0.7);
+  glTranslatef(-0.4, 0 + sacar_mando, 0);
   mando_izq.draw(SELECT, color.r, color.g, color.b, 1, plastico_azul); // azul
+  glPopMatrix();
+  
+  color = color_select[1];
 
+  glPushMatrix();
+  glTranslatef(1, 0, 0);
+  glScalef(1, 1, 0.7);
+  pantalla.draw(SELECT, color.r, color.g, color.b, 1, cristal_negro);
+  glPopMatrix();
+
+  color = color_select[2];
+  
+  glPushMatrix();
+  glTranslatef(2.25, 0, 0);
+  glRotatef(180, 0, 0, 1);
+  glScalef(0.677, 0.677, 0.7);
+  mando_dch.draw(SELECT, color.r, color.g, color.b, 1, plastico_rojo); // rojo
   glPopMatrix();
 }

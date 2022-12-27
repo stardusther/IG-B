@@ -29,7 +29,7 @@ typedef enum
     EXTRUSION,
     NINTENDO
 } _tipo_objeto;
-_tipo_objeto t_objeto = CUBO; // por defecto
+_tipo_objeto t_objeto = NINTENDO; // por defecto
 _modo modo = SOLID;               // por defecto
 
 // variables que definen la posicion de la camara en coordenadas polares
@@ -67,8 +67,7 @@ _material oro = {{ 0.24725f, 0.1995f, 0.0745f, 1.0f },
                  {0.628281f, 0.555802f, 0.366065f, 1.0f}, 
                  51.2f};
 
-// Para la selección
-int activo=-1;
+int activo=-1;  // Para la selección
 float escalado = 1.0;
 bool ortogonal = false;
 
@@ -483,7 +482,6 @@ void special_key(int Tecla1, int x, int y)
         if (nintendo.mando_izq.giro_joystick > (-nintendo.mando_izq.max_giro_joystick))
             nintendo.mando_izq.giro_joystick -= 5;
         break;
-        // TODO: Añadir las teclas para mover el joystick a la dcha e izq
 
     case GLUT_KEY_F3: // pulsar botón
         /*if (nintendo.mando_izq.pulsacion_boton < -0.05 )
@@ -513,14 +511,19 @@ void procesar_color(unsigned char color[3]){
            color[1] == nintendo.color_select[i].g && 
            color[2] == nintendo.color_select[i].b){
             if(nintendo.activo[i] == 0)
+            {
                 nintendo.activo[i] = 1;
+                printf("\nPieza [%d] desactivada ----> ", i); // Está al revés para que los mensajes se vean bien
+            }
             else
+            {
                 nintendo.activo[i] = 0;
+                printf("\nPieza [%d] activada ----> ", i);
+            }
 
-            printf("\nPieza %d activada", i);
+            
             glutPostRedisplay();
         }
-        activo = nintendo.activo[i];
     }
 }
 
@@ -531,20 +534,22 @@ void pick_color(int x, int y){
     glGetIntegerv(GL_VIEWPORT, viewport);
     glReadBuffer(GL_BACK);
     glReadPixels(x, viewport[3] - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte *) &color[0]);
-    printf("Activo: %d, valor x %d, valor y %d, %d, %d\n", activo, x, y, color[0], color[1], color[2]);
+    printf("valor x [%d], valor y [%d], color [%d, %d, %d]\n", x, y, color[0], color[1], color[2]);
     procesar_color(color);
 }
 
 void clickRaton(int boton, int estado, int x, int y)
 {
-    if (boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN)
+    if(boton == GLUT_RIGHT_BUTTON)
     {
-        estadoRaton = 1;
-        xc = x;
-        yc = y;
+        if(estado == GLUT_DOWN){
+            estadoRaton = 1;
+            xc = x;
+            yc = y;
+        }
+        else
+            estadoRaton = 0;
     }
-    else
-        estadoRaton = 0;
 
     if (boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
     {
@@ -559,6 +564,7 @@ void clickRaton(int boton, int estado, int x, int y)
         factor *= 1.1;
         glutPostRedisplay();
     }
+
     if (boton == 4)
     {
         factor *= 0.9;

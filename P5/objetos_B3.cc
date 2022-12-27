@@ -958,20 +958,21 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _mater
   // Pintar la pantalla
   glPushMatrix();
   glScalef(1.4, 1, -0.2);
-  pantalla_ext.draw(modo, 0, 0, 0, grosor, cristal_negro);
+  pantalla_ext.draw(modo,r, g, b, grosor, cristal_negro);
   glPopMatrix();
 
   glPushMatrix();
   glScalef(1.3, 1, -0.2);
   glTranslatef(0, 0, -0.2);
-  pantalla_int.draw(modo, 0.1, 0.1, 0.1, grosor, plastico_negro);
+  pantalla_int.draw(modo, r+0.1, g+0.1, b+0.1, grosor, plastico_negro);
   glPopMatrix();
 
+  //r=g=b=0.2;
   glPushMatrix();
   glScalef(0.4, 0.9, 0.1);
   glTranslatef(1.3, -0.47, -1.3);
   glRotatef(rotacion_pie, 1, 0, 0);
-  pie.draw(modo, 0.2, 0.2, 0.2, grosor, plastico_negro);
+  pie.draw(modo, r+0.2, g+0.2, b+0.2, grosor, plastico_negro);
   glPopMatrix();
 }
 
@@ -1021,9 +1022,9 @@ void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _mater
   glTranslatef(1, 0, 0);
   glScalef(1, 1, 0.7);
   if (activo[1] == 1)
-    pantalla.draw(EDGES, r, g, b, grosor, cristal_negro);
+    pantalla.draw(EDGES, 0, 0, 0, grosor, cristal_negro);
   else
-    pantalla.draw(modo, r, g, b, grosor, cristal_negro);
+    pantalla.draw(modo, 0, 0, 0, grosor, cristal_negro);
   glPopMatrix();
 
   r = 1.0;

@@ -232,7 +232,7 @@ void vista_ortogonal(void)
     glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    luces(alfa, luz2_on);
+    // luces(alfa, luz2_on);
     draw_axis();
     draw_objects();
 
@@ -244,7 +244,7 @@ void vista_ortogonal(void)
     glRotatef(90, 1, 0, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    luces(alfa, luz2_on);
+    // luces(alfa, luz2_on);
     draw_axis();
     draw_objects(); 
 
@@ -256,7 +256,7 @@ void vista_ortogonal(void)
     glRotatef(90, 0, 1, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    luces(alfa, luz2_on);
+    // luces(alfa, luz2_on);
     draw_axis();
     draw_objects(); 
 }

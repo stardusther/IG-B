@@ -988,10 +988,6 @@ _nintendo::_nintendo()
     activo[i]=0;
     color_select[i].r=color_select[i].g=color_select[i].b=color;
     color+=20;
-
-    if(i == piezas -1){
-      color = 15;
-    }
   }
   
 }
@@ -1058,14 +1054,14 @@ void _nintendo::seleccion()
   glPopMatrix();
   
   glPushMatrix();
-  glTranslatef(1, 0, 0);
+  glTranslatef(0, 0, 0);
   glScalef(1, 1, 0.7);
   color = color_select[1];
   pantalla.draw(SELECT, color.r, color.g, color.b, 1, cristal_negro);
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(2.25, 0, 0);
+  glTranslatef(1.25, 0, 0);
   glRotatef(180, 0, 0, 1);
   glScalef(0.677, 0.677, 0.7);
   color = color_select[2];

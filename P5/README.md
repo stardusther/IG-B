@@ -43,9 +43,7 @@ V ó B → Rotar luz 2
 # Vista ortogonal
 T → Vista ortogonal
 
-\+ → Aumentar el escalado
-
-\- → Reducir el escalado
+Rueda del ratón → Aumentar/reducir el escalado
 
 # Animaciones disponibles
 

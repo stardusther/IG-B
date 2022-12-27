@@ -222,40 +222,45 @@ void luces (float alfa, bool luz2_on){  //float alfa, float beta
 
  }
 
- void vista_ortogonal(void){
+ 
+void vista_ortogonal(void)
+{
     //Alzado
-    glViewport(Window_width*0.5,Window_high*0.5,Window_width*0.5,Window_high*0.5);
+    glViewport(Window_width/2,Window_high/2,Window_width/2,Window_high/2);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-5*escalado,5*escalado,-5*escalado,5*escalado,-100*escalado,100*escalado);
+    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
     draw_objects();
 
     //Planta
-    glViewport(0,Window_high*0.5,Window_width*0.5,Window_high*0.5);
+    glViewport(0,Window_high/2,Window_width/2,Window_high/2);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-5*escalado,5*escalado,-5*escalado,5*escalado,-100*escalado,100*escalado);
-    glRotatef(90,1,0,0);
+    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
+    glRotatef(90, 1, 0, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
-    draw_objects();
+    draw_objects(); 
 
     //Perfil
-    glViewport(0,0,Window_width*0.5,Window_high*0.5);
+    glViewport(0,0,Window_width/2,Window_high/2);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-5*escalado,5*escalado,-5*escalado,5*escalado,-100*escalado,100*escalado);
-    glRotatef(90,0,1,0);
+    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
+    glRotatef(90, 0, 1, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
-    draw_objects();
+    draw_objects(); 
+}
 
- }
 
 //**************************************************************************
 //
@@ -393,53 +398,15 @@ void normal_key(unsigned char Tecla1, int x, int y)
         else
             ortogonal = false;
         break;
-    case '+':
+/*     case '+':
         escalado -= 0.1;
         break;
     case '-':
         escalado += 0.1;
-        break;
+        break; */
     }
 
     glutPostRedisplay();
-}
-
-void orto(void)
-{
-    //Alzado
-    glViewport(Window_width/2,Window_high/2,Window_width/2,Window_high/2);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    luces(alfa, luz2_on);
-    draw_axis();
-    draw_objects();
-
-    //Planta
-    glViewport(0,Window_high/2,Window_width/2,Window_high/2);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
-    glRotatef(90, 1, 0, 0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    luces(alfa, luz2_on);
-    draw_axis();
-    draw_objects(); 
-
-    //Perfil
-    glViewport(0,0,Window_width/2,Window_high/2);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
-    glRotatef(90, 0, 1, 0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    luces(alfa, luz2_on);
-    draw_axis();
-    draw_objects(); 
 }
 
 //***************************************************************************

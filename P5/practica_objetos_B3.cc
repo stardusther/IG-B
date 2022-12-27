@@ -394,10 +394,10 @@ void normal_key(unsigned char Tecla1, int x, int y)
             ortogonal = false;
         break;
     case '+':
-        escalado += 1.1;
+        escalado -= 0.1;
         break;
     case '-':
-        escalado -= 1.1;
+        escalado += 0.1;
         break;
     }
 
@@ -413,6 +413,7 @@ void orto(void)
     glOrtho(-5*factor, 5*factor, -5*factor, 5*factor, -100*factor, 100*factor);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
     draw_objects();
 
@@ -424,6 +425,7 @@ void orto(void)
     glRotatef(90, 1, 0, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
     draw_objects(); 
 
@@ -435,6 +437,7 @@ void orto(void)
     glRotatef(90, 0, 1, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    luces(alfa, luz2_on);
     draw_axis();
     draw_objects(); 
 }
@@ -505,7 +508,7 @@ void special_key(int Tecla1, int x, int y)
 
 }
 
-void procesar_color(unsigned char color[3]){
+/* void procesar_color(unsigned char color[3]){
     for(int i = 0; i<nintendo.piezas; i++){
         if(color[0] == nintendo.color_select[i].r && 
            color[1] == nintendo.color_select[i].g && 
@@ -526,6 +529,28 @@ void procesar_color(unsigned char color[3]){
         }
     }
 }
+ */
+
+void procesar_color(unsigned char color[3]){
+    for(int i = 0; i<nintendo.piezas; i++){
+        if(color[0] == nintendo.color_select[0][i]){
+            if(nintendo.activo[i] == 0)
+            {
+                nintendo.activo[i] = 1;
+                printf("\nPieza [%d] desactivada ----> ", i); // Está al revés para que los mensajes se vean bien
+            }
+            else
+            {
+                nintendo.activo[i] = 0;
+                printf("\nPieza [%d] activada ----> ", i);
+            }
+
+            
+            glutPostRedisplay();
+        }
+    }
+}
+
 
 void pick_color(int x, int y){
     unsigned char color[3];
@@ -712,16 +737,16 @@ int main(int argc, char *argv[])
     // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
     glutSpecialFunc(special_key);
 
+    // ply = new _objeto_ply(argv[1]);
+    //Eventos ratón
+    glutMouseFunc(clickRaton);
+    glutMotionFunc(RatonMovido);
+
     // funcion de inicialización
     initialize();
 
     // creación del objeto ply
     ply.parametros(argv[1]);
-
-    // ply = new _objeto_ply(argv[1]);
-    //Eventos ratón
-    glutMouseFunc(clickRaton);
-    glutMotionFunc(RatonMovido);
 
     // inicio del bucle de eventos
     glutMainLoop();

@@ -40,11 +40,21 @@ I → Encender/apagar luz 2
 
 V ó B → Rotar luz 2
 
+# Vista ortogonal
+T → Vista ortogonal
+
+\+ → Aumentar el escalado
+
+\- → Reducir el escalado
+
 # Animaciones disponibles
 
 _Para esta sección se necesitará combinar la tecla Fn con las siguientes:_
 
-F1 → Rotar izq.
+F1 → Rotar joystick izq.
 
-F2 → Rotar dcha.
+F2 → Rotar joystick dcha.
 
+F3 → Sacar mando
+
+F4 → Meter mando

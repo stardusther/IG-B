@@ -978,7 +978,7 @@ void _pantalla::draw(_modo modo, float r, float g, float b, float grosor, _mater
 _nintendo::_nintendo()
 {
   sacar_mando = 0;
-  int color=0;
+  int color=100;
   piezas=3;
   color_pick=_vertex3f(1.0,0.0,0.0); 
   color_select.resize(piezas);
@@ -989,17 +989,15 @@ _nintendo::_nintendo()
     color+=20;
     activo[i]=0;
 
-    if(i == piezas -1){
+    /* if(i == piezas -1){
       color = 15;
-    }
+    } */
   }
   
 }
 
 void _nintendo::draw(_modo modo, float r, float g, float b, float grosor, _material material)
 {
-  float r_p, g_p, b_p;
-
   /* r_p = color_pick.r;
   g_p = color_pick.g;
   b_p = color_pick.b; */
